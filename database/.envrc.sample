@@ -1,0 +1,1 @@
+export DATABASE_URL=postgresql://graphqlexp:xxxx@localhost:5432/graphqlexp
