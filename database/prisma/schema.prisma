@@ -9,3 +9,14 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Servant {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(100)
+  className String @db.VarChar(64) @map(name: "class_name")
+  rarity Int
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+
+  @@map(name: "servants")
+}
