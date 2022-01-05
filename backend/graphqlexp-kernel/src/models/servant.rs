@@ -1,4 +1,5 @@
 use chrono::{DateTime, Local};
+use super::id::Id;
 
 pub enum Class {
     Saber,
@@ -17,7 +18,7 @@ pub enum Class {
 }
 
 pub struct Servant {
-    pub id: u32,
+    pub id: Id<Servant, u32>,
     pub name: String,
     pub class: Class,
     pub rarity: u32,
