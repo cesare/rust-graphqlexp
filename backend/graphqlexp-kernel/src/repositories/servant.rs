@@ -1,11 +1,10 @@
 use async_trait::async_trait;
 
 use crate::models::{
-    id::Id,
-    servant::Servant
+    servant::{Servant, ServantId}
 };
 
 #[async_trait]
 pub trait ServantRepository {
-    async fn find(&self, id: Id<Servant, u32>) -> anyhow::Result<Option<Servant>>;
+    async fn find(&self, id: ServantId) -> anyhow::Result<Option<Servant>>;
 }
