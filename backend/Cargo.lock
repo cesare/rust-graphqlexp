@@ -301,6 +301,7 @@ dependencies = [
 name = "graphqlexp-adapter"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "chrono",
  "graphqlexp-kernel",
  "sqlx",
