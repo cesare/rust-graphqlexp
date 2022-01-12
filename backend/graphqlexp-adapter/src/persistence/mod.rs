@@ -4,6 +4,7 @@ use std::sync::Arc;
 use anyhow::Result;
 use sqlx::postgres::{PgPool, PgPoolOptions};
 
+#[derive(Clone)]
 pub struct Database {
     #[allow(dead_code)]
     pub(crate) pool: Arc<PgPool>,
