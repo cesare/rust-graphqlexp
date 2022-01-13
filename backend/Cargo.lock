@@ -312,6 +312,9 @@ dependencies = [
 [[package]]
 name = "graphqlexp-app"
 version = "0.1.0"
+dependencies = [
+ "graphqlexp-adapter",
+]
 
 [[package]]
 name = "graphqlexp-kernel"
