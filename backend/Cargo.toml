@@ -1,5 +1,6 @@
 [workspace]
 members = [
   "graphqlexp-adapter",
+  "graphqlexp-app",
   "graphqlexp-kernel",
 ]
