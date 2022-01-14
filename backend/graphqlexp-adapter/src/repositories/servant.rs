@@ -2,7 +2,7 @@ use anyhow::Result;
 use async_trait::async_trait;
 use sqlx::query_as;
 
-use graphqlexp_kernel::{
+pub use graphqlexp_kernel::{
     models::servant::{Servant, ServantId},
     repositories::servant::ServantRepository,
 };
