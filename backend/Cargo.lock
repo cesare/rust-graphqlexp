@@ -329,6 +329,9 @@ dependencies = [
 [[package]]
 name = "graphqlexp-server"
 version = "0.1.0"
+dependencies = [
+ "graphqlexp-app",
+]
 
 [[package]]
 name = "hashbrown"
