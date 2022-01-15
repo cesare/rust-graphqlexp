@@ -3,4 +3,5 @@ members = [
   "graphqlexp-adapter",
   "graphqlexp-app",
   "graphqlexp-kernel",
+  "graphqlexp-server",
 ]
