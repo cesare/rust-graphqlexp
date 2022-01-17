@@ -10,5 +10,7 @@ graphqlexp-app = { path = "../graphqlexp-app" }
 actix-rt = "2.6.0"
 actix-web = "4.0.0-beta.20"
 anyhow = "1.0.52"
+juniper = "0.15.7"
+juniper_actix = "0.4.0"
 simplelog = "0.11.2"
 tokio = { version = "1.15.0", features = ["fs", "macros", "rt-multi-thread"] }
