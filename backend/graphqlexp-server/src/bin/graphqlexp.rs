@@ -2,14 +2,44 @@ use std::path::PathBuf;
 
 use actix_web::{App, HttpServer, middleware::Logger};
 use anyhow::Result;
+use serde::Deserialize;
 use simplelog::{Config, LevelFilter, SimpleLogger};
 use structopt::StructOpt;
+use tokio::fs::File;
+use tokio::io::AsyncReadExt;
 
 #[derive(StructOpt)]
 #[structopt(name = "graphqlexp")]
 struct Args {
     #[structopt(short, long, parse(from_os_str))]
-    config: PathBuf,
+    config_file: PathBuf,
+}
+
+impl Args {
+    async fn load_config(&self) -> Result<GraphqlexpConfig> {
+        let mut file = File::open(&self.config_file).await?;
+        let mut content = String::new();
+        file.read_to_string(&mut content).await?;
+        let config = toml::from_str(&content)?;
+        Ok(config)
+    }
+}
+
+#[derive(Deserialize)]
+struct GraphqlexpConfig {
+    pub server: ServerConfig,
+}
+
+#[derive(Deserialize)]
+struct ServerConfig {
+    bind: String,
+    port: u32,
+}
+
+impl ServerConfig {
+    pub fn bind_address(&self) -> String {
+        format!("{}:{}", self.bind, self.port)
+    }
 }
 
 fn initialize_logger() -> Result<()> {
@@ -20,6 +50,7 @@ fn initialize_logger() -> Result<()> {
 #[actix_rt::main]
 async fn main() -> Result<()> {
     let args = Args::from_args();
+    let config = args.load_config().await?;
 
     initialize_logger()?;
 
@@ -27,7 +58,8 @@ async fn main() -> Result<()> {
         App::new()
             .wrap(Logger::new("%a %t \"%r\" %s %b \"%{Referer}i\" \"%{User-Agent}i\" %T"))
     });
-    server.bind("127.0.0.1:8080")?.run().await?;
+    let bind_address = config.server.bind_address();
+    server.bind(bind_address)?.run().await?;
 
     Ok(())
 }
