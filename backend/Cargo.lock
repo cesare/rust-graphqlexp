@@ -877,6 +877,7 @@ dependencies = [
  "graphqlexp-app",
  "juniper",
  "juniper_actix",
+ "serde",
  "simplelog",
  "structopt",
  "tokio",
