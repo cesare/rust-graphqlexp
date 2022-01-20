@@ -27,6 +27,7 @@ impl Args {
 
 #[derive(Deserialize)]
 struct GraphqlexpConfig {
+    pub database: DatabaseConfig,
     pub server: ServerConfig,
 }
 
@@ -40,6 +41,15 @@ impl ServerConfig {
     pub fn bind_address(&self) -> String {
         format!("{}:{}", self.bind, self.port)
     }
+}
+
+#[derive(Deserialize)]
+struct DatabaseConfig {
+    host: String,
+    port: u32,
+    database: String,
+    username: String,
+    password: String,
 }
 
 fn initialize_logger() -> Result<()> {
