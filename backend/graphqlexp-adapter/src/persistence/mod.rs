@@ -1,8 +1,9 @@
-use std::env;
 use std::sync::Arc;
 
 use anyhow::Result;
 use sqlx::postgres::{PgPool, PgPoolOptions};
+
+use super::modules::RepositoriesModuleConfig;
 
 #[derive(Clone)]
 pub struct Database {
@@ -11,8 +12,8 @@ pub struct Database {
 }
 
 impl Database {
-    pub async fn create() -> Result<Self> {
-        let url = env::var("DATABASE_URL")?;
+    pub async fn create(config: &dyn RepositoriesModuleConfig) -> Result<Self> {
+        let url = config.database_url();
         let pool = PgPoolOptions::new()
             .connect(&url)
             .await?;
