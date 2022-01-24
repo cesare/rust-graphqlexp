@@ -894,6 +894,7 @@ dependencies = [
  "juniper",
  "juniper_actix",
  "serde",
+ "serde_json",
  "simplelog",
  "structopt",
  "tokio",
