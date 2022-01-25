@@ -1,12 +1,12 @@
 use std::path::PathBuf;
 
-use actix_web::{App, HttpServer, middleware::Logger, web};
+use actix_web::{App, HttpServer, web};
 use anyhow::Result;
-use simplelog::{Config, LevelFilter, SimpleLogger};
 use structopt::StructOpt;
 
 use graphqlexp_server::{
     config::{GraphqlexpConfig},
+    logger::{initialize_logger, default_logger},
     routes::graphql,
     schema::create_schema,
 };
@@ -18,11 +18,6 @@ struct Args {
     config_file: PathBuf,
 }
 
-fn initialize_logger() -> Result<()> {
-    SimpleLogger::init(LevelFilter::Debug, Config::default())?;
-    Ok(())
-}
-
 #[actix_rt::main]
 async fn main() -> Result<()> {
     let args = Args::from_args();
@@ -32,7 +27,7 @@ async fn main() -> Result<()> {
 
     let server = HttpServer::new(move || {
         App::new()
-            .wrap(Logger::new("%a %t \"%r\" %s %b \"%{Referer}i\" \"%{User-Agent}i\" %T"))
+            .wrap(default_logger())
             .app_data(web::Data::new(create_schema()))
             .service(web::resource("/graphql").route(web::post().to(graphql)))
     });
