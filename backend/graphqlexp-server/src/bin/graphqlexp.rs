@@ -5,13 +5,15 @@ use actix_web::{App, HttpServer, middleware::Logger};
 use actix_web::{middleware, web, Error, HttpResponse};
 use anyhow::Result;
 use juniper::http::GraphQLRequest;
-use serde::Deserialize;
 use simplelog::{Config, LevelFilter, SimpleLogger};
 use structopt::StructOpt;
 use tokio::fs::File;
 use tokio::io::AsyncReadExt;
 
-use graphqlexp_server::schema::{create_schema, Schema};
+use graphqlexp_server::{
+    config::{GraphqlexpConfig},
+    schema::{create_schema, Schema},
+};
 
 #[derive(StructOpt)]
 #[structopt(name = "graphqlexp")]
@@ -28,33 +30,6 @@ impl Args {
         let config = toml::from_str(&content)?;
         Ok(config)
     }
-}
-
-#[derive(Deserialize)]
-struct GraphqlexpConfig {
-    pub database: DatabaseConfig,
-    pub server: ServerConfig,
-}
-
-#[derive(Deserialize)]
-struct ServerConfig {
-    bind: String,
-    port: u32,
-}
-
-impl ServerConfig {
-    pub fn bind_address(&self) -> String {
-        format!("{}:{}", self.bind, self.port)
-    }
-}
-
-#[derive(Deserialize)]
-struct DatabaseConfig {
-    host: String,
-    port: u32,
-    database: String,
-    username: String,
-    password: String,
 }
 
 fn initialize_logger() -> Result<()> {
