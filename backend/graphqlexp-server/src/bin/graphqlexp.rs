@@ -1,9 +1,7 @@
 use std::path::PathBuf;
 
-use actix_web::{App, HttpServer, middleware::Logger};
-use actix_web::{web, Error, HttpResponse};
+use actix_web::{App, HttpServer, middleware::Logger, web};
 use anyhow::Result;
-use juniper::http::GraphQLRequest;
 use simplelog::{Config, LevelFilter, SimpleLogger};
 use structopt::StructOpt;
 use tokio::fs::File;
@@ -11,7 +9,8 @@ use tokio::io::AsyncReadExt;
 
 use graphqlexp_server::{
     config::{GraphqlexpConfig},
-    schema::{create_schema, Schema},
+    routes::graphql,
+    schema::create_schema,
 };
 
 #[derive(StructOpt)]
@@ -34,17 +33,6 @@ impl Args {
 fn initialize_logger() -> Result<()> {
     SimpleLogger::init(LevelFilter::Debug, Config::default())?;
     Ok(())
-}
-
-async fn graphql(st: web::Data<Schema>, data: web::Json<GraphQLRequest>) -> Result<HttpResponse, Error> {
-    let servant = web::block(move || {
-        let res = data.execute_sync(&st, &());
-        serde_json::to_string(&res)
-    }).await??;
-
-    Ok(HttpResponse::Ok()
-        .content_type("application/json")
-        .body(servant))
 }
 
 #[actix_rt::main]
