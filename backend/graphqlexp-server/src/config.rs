@@ -1,9 +1,24 @@
+use std::path::PathBuf;
+
+use anyhow::Result;
 use serde::Deserialize;
+use tokio::fs::File;
+use tokio::io::AsyncReadExt;
 
 #[derive(Deserialize)]
 pub struct GraphqlexpConfig {
     pub database: DatabaseConfig,
     pub server: ServerConfig,
+}
+
+impl GraphqlexpConfig {
+    pub async fn load(path: &PathBuf) -> Result<Self> {
+        let mut file = File::open(path).await?;
+        let mut content = String::new();
+        file.read_to_string(&mut content).await?;
+        let config = toml::from_str(&content)?;
+        Ok(config)
+    }
 }
 
 #[derive(Deserialize)]
