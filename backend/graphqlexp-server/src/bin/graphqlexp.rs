@@ -1,8 +1,7 @@
 use std::path::PathBuf;
-use std::sync::Arc;
 
 use actix_web::{App, HttpServer, middleware::Logger};
-use actix_web::{middleware, web, Error, HttpResponse};
+use actix_web::{web, Error, HttpResponse};
 use anyhow::Result;
 use juniper::http::GraphQLRequest;
 use simplelog::{Config, LevelFilter, SimpleLogger};
