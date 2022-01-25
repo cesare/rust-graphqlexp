@@ -7,7 +7,7 @@ use structopt::StructOpt;
 use graphqlexp_server::{
     config::{GraphqlexpConfig},
     logger::{initialize_logger, default_logger},
-    routes::graphql,
+    routes::configure_routes,
     schema::create_schema,
 };
 
@@ -29,7 +29,7 @@ async fn main() -> Result<()> {
         App::new()
             .wrap(default_logger())
             .app_data(web::Data::new(create_schema()))
-            .service(web::resource("/graphql").route(web::post().to(graphql)))
+            .configure(configure_routes)
     });
     let bind_address = config.server.bind_address();
     server.bind(bind_address)?.run().await?;
