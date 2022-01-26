@@ -1,1 +1,3 @@
-pub mod show_servant;
+mod show_servant;
+
+pub use show_servant::ShowServant;
