@@ -12,7 +12,7 @@ pub struct ShowServant {
 }
 
 impl ShowServant {
-    pub fn new(repositories: Arc<RepositoriesModule>) -> Self {
+    pub fn new(repositories: &Arc<RepositoriesModule>) -> Self {
         Self {
             repositories: repositories.clone(),
         }
