@@ -4,11 +4,11 @@ pub use graphqlexp_adapter::modules::RepositoriesModuleConfig;
 use graphqlexp_adapter::modules::{RepositoriesModule};
 use crate::usecase::ShowServant;
 
-pub struct UsercasesModule {
+pub struct UsecasesModule {
     repositories: RepositoriesModule,
 }
 
-impl UsercasesModule {
+impl UsecasesModule {
     pub async fn create(config: &dyn RepositoriesModuleConfig) -> Result<Self> {
         let repositories = RepositoriesModule::create(config).await?;
 
