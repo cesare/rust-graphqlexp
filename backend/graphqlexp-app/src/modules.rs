@@ -1,6 +1,7 @@
 use anyhow::Result;
 
-use graphqlexp_adapter::modules::{RepositoriesModule, RepositoriesModuleConfig};
+pub use graphqlexp_adapter::modules::RepositoriesModuleConfig;
+use graphqlexp_adapter::modules::{RepositoriesModule};
 use crate::usecase::ShowServant;
 
 pub struct UsercasesModule {
