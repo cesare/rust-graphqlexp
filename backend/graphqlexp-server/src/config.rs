@@ -5,6 +5,8 @@ use serde::Deserialize;
 use tokio::fs::File;
 use tokio::io::AsyncReadExt;
 
+use graphqlexp_app::modules::RepositoriesModuleConfig;
+
 #[derive(Deserialize)]
 pub struct GraphqlexpConfig {
     pub database: DatabaseConfig,
@@ -40,4 +42,13 @@ pub struct DatabaseConfig {
     database: String,
     username: String,
     password: String,
+}
+
+impl RepositoriesModuleConfig for DatabaseConfig {
+    fn database_url(&self) -> String {
+        format!(
+            "postgresql://{}:{}@{}:{}/{}",
+            self.username, self.password, self.host, self.port, self.database
+        )
+    }
 }
