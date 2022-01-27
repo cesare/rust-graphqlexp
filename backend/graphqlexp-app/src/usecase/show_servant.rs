@@ -3,16 +3,16 @@ use std::sync::Arc;
 use anyhow::Result;
 
 use graphqlexp_adapter::{
-    modules::RepositoriesModuleExt,
+    modules::RepositoriesModule,
     repositories::servant::{Servant, ServantId, ServantRepository},
 };
 
-pub struct ShowServant<R: RepositoriesModuleExt> {
-    repositories: Arc<R>,
+pub struct ShowServant {
+    repositories: Arc<RepositoriesModule>,
 }
 
-impl<R: RepositoriesModuleExt> ShowServant<R> {
-    pub fn new(repositories: Arc<R>) -> Self {
+impl ShowServant {
+    pub fn new(repositories: Arc<RepositoriesModule>) -> Self {
         Self {
             repositories: repositories.clone(),
         }

@@ -27,14 +27,8 @@ impl RepositoriesModule {
         let database = Database::create(config).await?;
         Ok(Self::new(database))
     }
-}
 
-pub trait RepositoriesModuleExt {
-    fn servant_repository(&self) -> &Repository<Servant>;
-}
-
-impl RepositoriesModuleExt for RepositoriesModule {
-    fn servant_repository(&self) -> &Repository<Servant> {
+    pub fn servant_repository(&self) -> &Repository<Servant> {
         &self.servant_repository
     }
 }
