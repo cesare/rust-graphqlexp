@@ -6,6 +6,7 @@ pub use graphqlexp_adapter::modules::RepositoriesModuleConfig;
 use graphqlexp_adapter::modules::{RepositoriesModule};
 use crate::usecase::ShowServant;
 
+#[derive(Clone)]
 pub struct UsecasesModule {
     repositories: Arc<RepositoriesModule>,
 }

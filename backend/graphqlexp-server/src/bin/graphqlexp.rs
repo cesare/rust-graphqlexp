@@ -4,6 +4,9 @@ use actix_web::{App, HttpServer, web};
 use anyhow::Result;
 use structopt::StructOpt;
 
+use graphqlexp_app::{
+    modules::{UsecasesModule},
+};
 use graphqlexp_server::{
     config::{GraphqlexpConfig},
     logger::{initialize_logger, default_logger},
@@ -22,6 +25,7 @@ struct Args {
 async fn main() -> Result<()> {
     let args = Args::from_args();
     let config = GraphqlexpConfig::load(&args.config_file).await?;
+    let usecases = UsecasesModule::create(&config.database).await?;
 
     initialize_logger()?;
 
@@ -29,6 +33,7 @@ async fn main() -> Result<()> {
         App::new()
             .wrap(default_logger())
             .app_data(web::Data::new(create_schema()))
+            .app_data(web::Data::new(usecases.clone()))
             .configure(configure_routes)
     });
     let bind_address = config.server.bind_address();
