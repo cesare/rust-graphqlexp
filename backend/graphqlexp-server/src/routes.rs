@@ -16,9 +16,9 @@ pub fn configure_routes(cfg: &mut ServiceConfig) {
     );
 }
 
-async fn graphql(st: Data<Schema>, data: Json<GraphQLRequest>) -> Result<HttpResponse, Error> {
+async fn graphql(schema: Data<Schema>, data: Json<GraphQLRequest>) -> Result<HttpResponse, Error> {
     let servant = block(move || {
-        let res = data.execute_sync(&st, &());
+        let res = data.execute_sync(&schema, &());
         serde_json::to_string(&res)
     }).await??;
 
