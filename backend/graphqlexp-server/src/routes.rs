@@ -9,7 +9,7 @@ use anyhow::Result;
 use juniper::http::GraphQLRequest;
 
 use graphqlexp_app::modules::UsecasesModule;
-use crate::schema::Schema;
+use crate::schema::{Context, Schema};
 
 pub fn configure_routes(cfg: &mut ServiceConfig) {
     cfg.service(
@@ -17,9 +17,13 @@ pub fn configure_routes(cfg: &mut ServiceConfig) {
     );
 }
 
-async fn graphql(_usecases: Data<UsecasesModule>, schema: Data<Schema>, data: Json<GraphQLRequest>) -> Result<HttpResponse, Error> {
+async fn graphql(usecases: Data<UsecasesModule>, schema: Data<Schema>, data: Json<GraphQLRequest>) -> Result<HttpResponse, Error> {
+    let context = Context {
+        usecases: usecases.get_ref().to_owned(),
+    };
+
     let servant = block(move || {
-        let res = data.execute_sync(&schema, &());
+        let res = data.execute_sync(&schema, &context);
         serde_json::to_string(&res)
     }).await??;
 
