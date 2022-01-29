@@ -20,7 +20,10 @@ pub struct QueryRoot;
 
 #[juniper::graphql_object(Context = Context)]
 impl QueryRoot {
-    async fn servant(_context: &Context, _id: i32) -> FieldResult<Servant> {
+    async fn servant(context: &Context, id: i32) -> FieldResult<Servant> {
+        let usecase = context.usecases.show_servant_usecase();
+        let _result = usecase.find(id as u32).await?;
+
         Ok(Servant {
             id: 1,
             name: "Meltryllis".to_owned(),
