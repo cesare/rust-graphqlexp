@@ -20,7 +20,7 @@ pub struct QueryRoot;
 
 #[juniper::graphql_object(Context = Context)]
 impl QueryRoot {
-    fn servant(_context: &Context, _id: i32) -> FieldResult<Servant> {
+    async fn servant(_context: &Context, _id: i32) -> FieldResult<Servant> {
         Ok(Servant {
             id: 1,
             name: "Meltryllis".to_owned(),
