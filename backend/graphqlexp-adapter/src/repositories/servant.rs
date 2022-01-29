@@ -16,7 +16,7 @@ impl ServantRepository for Repository<Servant> {
         let statement = "
             select id, name, class_name, rarity, created_at, updated_at
             from servants
-            where id = ?
+            where id = $1
             limit 1
         ";
         let result = query_as::<_, ServantRecord>(statement)
