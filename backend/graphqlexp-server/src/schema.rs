@@ -1,4 +1,4 @@
-use juniper::{EmptySubscription, EmptyMutation, FieldResult, GraphQLObject, RootNode};
+use juniper::{EmptySubscription, EmptyMutation, FieldError, FieldResult, GraphQLObject, RootNode, graphql_value};
 
 use graphqlexp_app::modules::UsecasesModule;
 
@@ -22,14 +22,24 @@ pub struct QueryRoot;
 impl QueryRoot {
     async fn servant(context: &Context, id: i32) -> FieldResult<Servant> {
         let usecase = context.usecases.show_servant_usecase();
-        let _result = usecase.find(id as u32).await?;
+        let result = usecase.find(id as u32).await?;
 
-        Ok(Servant {
-            id: 1,
-            name: "Meltryllis".to_owned(),
-            class_name: "alterego".to_owned(),
-            rarity: 5,
-        })
+        match result {
+            Some(servant) => {
+                Ok(Servant {
+                    id: servant.id.value as i32,
+                    name: servant.name,
+                    class_name: servant.class.to_string(),
+                    rarity: servant.rarity as i32,
+                })
+            }
+            _ => {
+                Err(FieldError::new(
+                    "Servant Not Found",
+                    graphql_value!({ "not_found": "servant not found" }),
+                ))
+            }
+        }
     }
 }
 
