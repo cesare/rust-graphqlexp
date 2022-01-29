@@ -2,7 +2,7 @@ use actix_web::{
     Error, HttpResponse,
     web::{
         Data, Json, ServiceConfig,
-        block, post, resource,
+        post, resource,
     }
 };
 use anyhow::Result;
@@ -22,10 +22,8 @@ async fn graphql(usecases: Data<UsecasesModule>, schema: Data<Schema>, data: Jso
         usecases: usecases.get_ref().to_owned(),
     };
 
-    let servant = block(move || {
-        let res = data.execute_sync(&schema, &context);
-        serde_json::to_string(&res)
-    }).await??;
+    let res = data.execute(&schema, &context).await;
+    let servant = serde_json::to_string(&res)?;
 
     Ok(HttpResponse::Ok()
         .content_type("application/json")
