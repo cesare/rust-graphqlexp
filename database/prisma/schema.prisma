@@ -15,8 +15,8 @@ model Servant {
   name String @db.VarChar(100)
   className String @db.VarChar(64) @map(name: "class_name")
   rarity Int
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @updatedAt @map(name: "updated_at")
+  createdAt DateTime @db.Timestamptz(3) @default(now()) @map(name: "created_at")
+  updatedAt DateTime @db.Timestamptz(3) @default(now()) @updatedAt @map(name: "updated_at")
 
   @@map(name: "servants")
 }
