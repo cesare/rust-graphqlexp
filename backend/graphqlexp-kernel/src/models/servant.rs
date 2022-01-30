@@ -38,7 +38,7 @@ impl FromStr for Class {
             "ruler" => Ok(Self::Ruler),
             "avenger" => Ok(Self::Avenger),
             "mooncancer" => Ok(Self::Mooncancer),
-            "alterago" => Ok(Self::Alterego),
+            "alterego" => Ok(Self::Alterego),
             "pretender" => Ok(Self::Pretender),
             "foreigner" => Ok(Self::Foreigner),
             _ => Err(anyhow!("Unknown servant class name: {}", class_name)),
