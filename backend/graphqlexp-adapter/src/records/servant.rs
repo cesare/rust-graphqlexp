@@ -7,10 +7,10 @@ use graphqlexp_kernel::models::servant::{Class, Servant, ServantId};
 
 #[derive(FromRow)]
 pub struct ServantRecord {
-    pub id: u32,
+    pub id: i32,
     pub name: String,
     pub class_name: String,
-    pub rarity: u32,
+    pub rarity: i32,
     pub created_at: DateTime<Local>,
     pub updated_at: DateTime<Local>,
 }

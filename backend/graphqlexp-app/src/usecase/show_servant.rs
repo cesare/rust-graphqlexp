@@ -18,7 +18,7 @@ impl ShowServant {
         }
     }
 
-    pub async fn find(&self, id: u32) -> Result<Option<Servant>> {
+    pub async fn find(&self, id: i32) -> Result<Option<Servant>> {
         let repository = self.repositories.servant_repository();
         let result = repository.find(ServantId::new(id)).await?;
         match result {

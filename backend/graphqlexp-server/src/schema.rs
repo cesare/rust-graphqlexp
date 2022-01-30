@@ -22,15 +22,15 @@ pub struct QueryRoot;
 impl QueryRoot {
     async fn servant(context: &Context, id: i32) -> FieldResult<Servant> {
         let usecase = context.usecases.show_servant_usecase();
-        let result = usecase.find(id as u32).await?;
+        let result = usecase.find(id).await?;
 
         match result {
             Some(servant) => {
                 Ok(Servant {
-                    id: servant.id.value as i32,
+                    id: servant.id.value,
                     name: servant.name,
                     class_name: servant.class.to_string(),
-                    rarity: servant.rarity as i32,
+                    rarity: servant.rarity,
                 })
             }
             _ => {
