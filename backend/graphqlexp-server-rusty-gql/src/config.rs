@@ -10,6 +10,7 @@ use graphqlexp_app::modules::RepositoriesModuleConfig;
 #[derive(Deserialize)]
 pub struct GraphqlexpConfig {
     pub database: DatabaseConfig,
+    pub schema: SchemaConfig,
     pub server: ServerConfig,
 }
 
@@ -50,5 +51,16 @@ impl RepositoriesModuleConfig for DatabaseConfig {
             "postgresql://{}:{}@{}:{}/{}",
             self.username, self.password, self.host, self.port, self.database
         )
+    }
+}
+
+#[derive(Deserialize)]
+pub struct SchemaConfig {
+    config_path: String,
+}
+
+impl SchemaConfig {
+    pub fn load_container(&self) -> Result<()> {
+        todo!()
     }
 }

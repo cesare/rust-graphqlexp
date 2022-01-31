@@ -1,0 +1,9 @@
+type Query {
+  servant(id: Int): [Servant!]!
+}
+
+type Servant {
+  name: String!
+  class_name: String!
+  rarity: Int!
+}
