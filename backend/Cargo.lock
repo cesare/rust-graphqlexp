@@ -902,6 +902,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "graphqlexp-server-rusty-gql"
+version = "0.1.0"
+dependencies = [
+ "actix-rt",
+ "actix-web",
+ "anyhow",
+ "graphqlexp-app",
+ "rusty-gql",
+ "serde",
+ "serde_json",
+ "simplelog",
+ "structopt",
+ "tokio",
+ "toml",
+]
+
+[[package]]
 name = "h2"
 version = "0.3.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1571,6 +1588,34 @@ dependencies = [
  "ring",
  "sct",
  "webpki",
+]
+
+[[package]]
+name = "rusty-gql"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e9215f9c8a8f94d910fc431e4f31ada5158028c722109198977a996f85a79c60"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "futures-util",
+ "graphql-parser",
+ "http",
+ "rusty-gql-macro",
+ "serde",
+ "serde_json",
+ "tokio",
+]
+
+[[package]]
+name = "rusty-gql-macro"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5bf8c3c101cab662148d50a25d5d47b7f477ebef8c4e6fec9de9d99c5360507f"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
