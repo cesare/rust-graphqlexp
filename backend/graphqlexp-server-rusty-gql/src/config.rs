@@ -56,11 +56,5 @@ impl RepositoriesModuleConfig for DatabaseConfig {
 
 #[derive(Deserialize)]
 pub struct SchemaConfig {
-    config_path: String,
-}
-
-impl SchemaConfig {
-    pub fn load_container(&self) -> Result<()> {
-        todo!()
-    }
+    pub config_path: String,
 }
