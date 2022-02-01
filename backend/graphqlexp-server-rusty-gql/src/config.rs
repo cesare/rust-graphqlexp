@@ -7,7 +7,7 @@ use tokio::io::AsyncReadExt;
 
 use graphqlexp_app::modules::RepositoriesModuleConfig;
 
-#[derive(Deserialize)]
+#[derive(Clone, Deserialize)]
 pub struct GraphqlexpConfig {
     pub database: DatabaseConfig,
     pub schema: SchemaConfig,
@@ -24,7 +24,7 @@ impl GraphqlexpConfig {
     }
 }
 
-#[derive(Deserialize)]
+#[derive(Clone, Deserialize)]
 pub struct ServerConfig {
     bind: String,
     port: u32,
@@ -36,7 +36,7 @@ impl ServerConfig {
     }
 }
 
-#[derive(Deserialize)]
+#[derive(Clone, Deserialize)]
 pub struct DatabaseConfig {
     host: String,
     port: u32,
@@ -54,7 +54,7 @@ impl RepositoriesModuleConfig for DatabaseConfig {
     }
 }
 
-#[derive(Deserialize)]
+#[derive(Clone, Deserialize)]
 pub struct SchemaConfig {
     pub config_path: String,
 }

@@ -10,7 +10,7 @@ use graphqlexp_app::{
 use graphqlexp_server_rusty_gql::{
     config::{GraphqlexpConfig},
     logger::{initialize_logger, default_logger},
-    routes::configure_routes,
+    routes::RoutesFactory,
 };
 
 #[derive(StructOpt)]
@@ -28,13 +28,13 @@ async fn main() -> Result<()> {
 
     initialize_logger()?;
 
+    let bind_address = config.server.bind_address();
     let server = HttpServer::new(move || {
         App::new()
             .wrap(default_logger())
             .app_data(web::Data::new(usecases.clone()))
-            .configure(configure_routes)
+            .configure(RoutesFactory::create(&config))
     });
-    let bind_address = config.server.bind_address();
     server.bind(bind_address)?.run().await?;
 
     Ok(())

@@ -8,11 +8,18 @@ use actix_web::{
 use anyhow::Result;
 
 use graphqlexp_app::modules::UsecasesModule;
+use crate::config::GraphqlexpConfig;
 
-pub fn configure_routes(cfg: &mut ServiceConfig) {
-    cfg.service(
-        resource("/graphql").route(post().to(graphql))
-    );
+pub struct RoutesFactory;
+
+impl RoutesFactory {
+    pub fn create(_config: &GraphqlexpConfig) -> impl FnOnce(&mut ServiceConfig) {
+        |cfg: &mut ServiceConfig| {
+            cfg.service(
+                resource("/graphql").route(post().to(graphql))
+            );
+        }
+    }
 }
 
 async fn graphql(usecases: Data<UsecasesModule>) -> Result<HttpResponse, Error> {
