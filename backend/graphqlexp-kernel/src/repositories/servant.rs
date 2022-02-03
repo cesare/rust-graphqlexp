@@ -7,4 +7,5 @@ use crate::models::{
 #[async_trait]
 pub trait ServantRepository {
     async fn find(&self, id: ServantId) -> anyhow::Result<Option<Servant>>;
+    async fn list(&self) -> anyhow::Result<Vec<Servant>>;
 }

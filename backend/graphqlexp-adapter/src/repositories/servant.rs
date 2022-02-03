@@ -28,4 +28,23 @@ impl ServantRepository for Repository<Servant> {
             None => Ok(None),
         }
     }
+
+    async fn list(&self) -> Result<Vec<Servant>> {
+        let pool = self.database.pool.clone();
+        let statement = "
+            select id, name, class_name, rarity, created_at, updated_at
+            from servants
+        ";
+        let results = query_as::<_, ServantRecord>(statement)
+            .fetch_all(&*pool)
+            .await?;
+
+        let mut servants: Vec<Servant> = vec![];
+        for record in results {
+            let servant = record.try_into()?;
+            servants.push(servant);
+        }
+        Ok(servants)
+    }
+
 }
