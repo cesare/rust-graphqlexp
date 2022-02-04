@@ -41,6 +41,21 @@ impl QueryRoot {
             }
         }
     }
+
+    async fn list_servants(context: &Context) -> FieldResult<Vec<Servant>> {
+        let usecase = context.usecases.list_servants_usecase();
+        let servants = usecase.execute().await?;
+
+        let results = servants.iter().map(|servant|
+            Servant {
+                id: servant.id.value,
+                name: servant.name.to_owned(),
+                class_name: servant.class.to_string(),
+                rarity: servant.rarity,
+            }
+        ).collect();
+        Ok(results)
+    }
 }
 
 
