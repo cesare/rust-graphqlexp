@@ -1,7 +1,7 @@
 use std::str::FromStr;
 use std::string::ToString;
 
-use anyhow::anyhow;
+use anyhow::{Result, anyhow, bail};
 use chrono::{DateTime, Local};
 use super::id::Id;
 
@@ -64,6 +64,21 @@ impl ToString for Class {
             Self::Foreigner => "foreigner",
         };
         class_name.to_owned()
+    }
+}
+
+pub struct Rarity(i32);
+
+impl Rarity {
+    pub fn create(value: i32) -> Result<Self> {
+        if value < 0 || value > 5 {
+            bail!("Invalid rarity value: {}", value);
+        }
+        Ok(Self(value))
+    }
+
+    pub fn value(&self) -> i32 {
+        self.0
     }
 }
 
