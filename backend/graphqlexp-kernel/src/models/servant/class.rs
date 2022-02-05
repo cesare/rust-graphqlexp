@@ -3,6 +3,7 @@ use std::string::ToString;
 
 use anyhow::anyhow;
 
+#[derive(Debug, PartialEq)]
 pub enum Class {
     Saber,
     Archer,
@@ -60,5 +61,40 @@ impl ToString for Class {
             Self::Foreigner => "foreigner",
         };
         class_name.to_owned()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use std::str::FromStr;
+
+    use super::Class;
+
+    #[test]
+    fn to_string() {
+        assert_eq!("saber", Class::Saber.to_string());
+        assert_eq!("alterego", Class::Alterego.to_string());
+    }
+
+    #[test]
+    fn valid_string_to_class() {
+        let saber = Class::from_str("saber");
+        assert!(saber.is_ok());
+        assert_eq!(Class::Saber, saber.unwrap());
+
+        let foreigner = Class::from_str("foreigner");
+        assert!(foreigner.is_ok());
+        assert_eq!(Class::Foreigner, foreigner.unwrap());
+    }
+
+    #[test]
+    fn invalid_string_to_class() {
+        assert!(Class::from_str("faker").is_err());
+    }
+
+    #[test]
+    fn equality() {
+        assert!(Class::Saber == Class::Saber);
+        assert!(Class::Saber != Class::Avenger);
     }
 }
