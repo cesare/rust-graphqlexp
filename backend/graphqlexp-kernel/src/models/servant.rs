@@ -70,8 +70,11 @@ impl ToString for Class {
 pub struct Rarity(i32);
 
 impl Rarity {
+    const MIN_RARITY: i32 = 0;
+    const MAX_RARITY: i32 = 5;
+
     pub fn create(value: i32) -> Result<Self> {
-        if value < 0 || value > 5 {
+        if value < Self::MIN_RARITY || value > Self::MAX_RARITY {
             bail!("Invalid rarity value: {}", value);
         }
         Ok(Self(value))
