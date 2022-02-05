@@ -3,7 +3,7 @@ use std::str::FromStr;
 use chrono::{DateTime, Local};
 use sqlx::FromRow;
 
-use graphqlexp_kernel::models::servant::{Class, Servant, ServantId};
+use graphqlexp_kernel::models::servant::{Class, Rarity, Servant, ServantId};
 
 #[derive(FromRow)]
 pub struct ServantRecord {
@@ -23,7 +23,7 @@ impl TryFrom<ServantRecord> for Servant {
             id: ServantId::new(record.id),
             name: record.name,
             class: Class::from_str(&record.class_name)?,
-            rarity: record.rarity,
+            rarity: Rarity::create(record.rarity)?,
             created_at: record.created_at,
             updated_at: record.updated_at,
         };

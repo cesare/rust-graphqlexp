@@ -30,7 +30,7 @@ impl QueryRoot {
                     id: servant.id.value,
                     name: servant.name,
                     class_name: servant.class.to_string(),
-                    rarity: servant.rarity,
+                    rarity: servant.rarity.value(),
                 })
             }
             _ => {
@@ -51,7 +51,7 @@ impl QueryRoot {
                 id: servant.id.value,
                 name: servant.name.to_owned(),
                 class_name: servant.class.to_string(),
-                rarity: servant.rarity,
+                rarity: servant.rarity.value(),
             }
         ).collect();
         Ok(results)
