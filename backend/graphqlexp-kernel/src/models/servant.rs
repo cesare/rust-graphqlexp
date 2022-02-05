@@ -1,3 +1,4 @@
+use std::ops::RangeInclusive;
 use std::str::FromStr;
 use std::string::ToString;
 
@@ -71,11 +72,10 @@ impl ToString for Class {
 pub struct Rarity(i32);
 
 impl Rarity {
-    const MIN_RARITY: i32 = 0;
-    const MAX_RARITY: i32 = 5;
+    const RARITY_RANGE: RangeInclusive<i32> = 0..=5;
 
     pub fn create(value: i32) -> Result<Self> {
-        if value < Self::MIN_RARITY || value > Self::MAX_RARITY {
+        if ! Self::RARITY_RANGE.contains(&value) {
             bail!("Invalid rarity value: {}", value);
         }
         Ok(Self(value))
