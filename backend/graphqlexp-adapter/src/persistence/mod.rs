@@ -7,7 +7,6 @@ use super::modules::RepositoriesModuleConfig;
 
 #[derive(Clone)]
 pub struct Database {
-    #[allow(dead_code)]
     pub(crate) pool: Arc<PgPool>,
 }
 

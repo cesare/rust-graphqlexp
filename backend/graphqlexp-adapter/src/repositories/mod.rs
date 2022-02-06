@@ -5,7 +5,6 @@ use crate::persistence::Database;
 pub mod servant;
 
 pub struct Repository<T> {
-    #[allow(dead_code)]
     database: Database,
     _marker: PhantomData<T>,
 }
