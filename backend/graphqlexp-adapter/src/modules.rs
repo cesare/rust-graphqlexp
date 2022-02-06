@@ -13,13 +13,13 @@ pub trait RepositoriesModuleConfig {
 }
 
 pub struct RepositoriesModule {
-    servant_repository: Repository<Servant>,
+    database: Database,
 }
 
 impl RepositoriesModule {
     pub fn new(db: Database) -> Self {
         Self {
-            servant_repository: Repository::new(db.clone()),
+            database: db,
         }
     }
 
@@ -28,7 +28,7 @@ impl RepositoriesModule {
         Ok(Self::new(database))
     }
 
-    pub fn servant_repository(&self) -> &Repository<Servant> {
-        &self.servant_repository
+    pub fn servant_repository(&self) -> Repository<Servant> {
+        Repository::new(self.database.clone())
     }
 }
