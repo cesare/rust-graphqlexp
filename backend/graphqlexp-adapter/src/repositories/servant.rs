@@ -4,7 +4,7 @@ use sqlx::query_as;
 
 pub use graphqlexp_kernel::{
     models::servant::{Servant, ServantId},
-    repositories::servant::ServantRepository,
+    repositories::servant::{NewServant, ServantRepository},
 };
 use super::Repository;
 use crate::records::servant::ServantRecord;
@@ -47,4 +47,20 @@ impl ServantRepository for Repository<Servant> {
         Ok(servants)
     }
 
+    async fn register(&self, servant: NewServant) -> Result<Servant> {
+        let pool = self.database.pool.clone();
+        let statement = "
+            insert into servants (name, class_name, rarity)
+            values ($1, $2, $3)
+            returning id, name, class_name, rarity, created_at, updated_at
+        ";
+        let result = query_as::<_, ServantRecord>(statement)
+            .bind(servant.name)
+            .bind(servant.class.to_string())
+            .bind(servant.rarity.value())
+            .fetch_one(&*pool)
+            .await?;
+        let servant = result.try_into()?;
+        Ok(servant)
+    }
 }
