@@ -3,7 +3,7 @@ use async_trait::async_trait;
 use sqlx::query_as;
 
 pub use graphqlexp_kernel::{
-    models::servant::{Servant, ServantId},
+    models::servant::{Class, Rarity, Servant, ServantId},
     repositories::servant::{NewServant, ServantRepository},
 };
 use super::Repository;

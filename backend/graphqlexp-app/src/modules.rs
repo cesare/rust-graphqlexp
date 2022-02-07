@@ -4,7 +4,7 @@ use anyhow::Result;
 
 pub use graphqlexp_adapter::modules::RepositoriesModuleConfig;
 use graphqlexp_adapter::modules::{RepositoriesModule};
-use crate::usecase::{ListServants, ShowServant};
+use crate::usecase::{ListServants, RegisterServant, ShowServant};
 
 #[derive(Clone)]
 pub struct UsecasesModule {
@@ -23,5 +23,9 @@ impl UsecasesModule {
 
     pub fn list_servants_usecase(&self) -> ListServants {
         ListServants::new(&self.repositories)
+    }
+
+    pub fn register_servant_usecase(&self) -> RegisterServant {
+        RegisterServant::new(&self.repositories)
     }
 }
