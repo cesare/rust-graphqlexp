@@ -1,4 +1,12 @@
-use juniper::{EmptySubscription, EmptyMutation, FieldError, FieldResult, GraphQLObject, RootNode, graphql_value};
+use juniper::{
+    EmptySubscription,
+    FieldError,
+    FieldResult,
+    GraphQLInputObject,
+    GraphQLObject,
+    RootNode,
+    graphql_value
+};
 
 use graphqlexp_app::modules::UsecasesModule;
 
@@ -8,6 +16,14 @@ struct Servant {
     name: String,
     class_name: String,
     rarity: i32,
+}
+
+#[derive(GraphQLInputObject)]
+#[graphql(description = "Servant Input")]
+pub struct ServantInput {
+    pub name: String,
+    pub class_name: String,
+    pub rarity: i32,
 }
 
 pub struct Context {
@@ -58,9 +74,17 @@ impl QueryRoot {
     }
 }
 
+pub struct MutationRoot;
 
-pub type Schema = RootNode<'static, QueryRoot, EmptyMutation<Context>, EmptySubscription<Context>>;
+#[juniper::graphql_object(Context = Context)]
+impl MutationRoot {
+    async fn create_servant(_context: &Context, _input: ServantInput) -> FieldResult<Servant> {
+        todo!()
+    }
+}
+
+pub type Schema = RootNode<'static, QueryRoot, MutationRoot, EmptySubscription<Context>>;
 
 pub fn create_schema() -> Schema {
-    Schema::new(QueryRoot {}, EmptyMutation::new(), EmptySubscription::new())
+    Schema::new(QueryRoot {}, MutationRoot {}, EmptySubscription::new())
 }
