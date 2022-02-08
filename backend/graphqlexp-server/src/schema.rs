@@ -8,7 +8,10 @@ use juniper::{
     graphql_value
 };
 
-use graphqlexp_app::modules::UsecasesModule;
+use graphqlexp_app::{
+    modules::UsecasesModule,
+    usecase::ServantRegistration,
+};
 
 #[derive(GraphQLObject)]
 struct Servant {
@@ -78,8 +81,21 @@ pub struct MutationRoot;
 
 #[juniper::graphql_object(Context = Context)]
 impl MutationRoot {
-    async fn create_servant(_context: &Context, _input: ServantInput) -> FieldResult<Servant> {
-        todo!()
+    async fn create_servant(context: &Context, input: ServantInput) -> FieldResult<Servant> {
+        let usecase = context.usecases.register_servant_usecase();
+        let attributes = ServantRegistration {
+            name: input.name,
+            class_name: input.class_name,
+            rarity: input.rarity,
+        };
+        let servant = usecase.execute(attributes).await?;
+
+        Ok(Servant {
+            id: servant.id.value,
+            name: servant.name.to_owned(),
+            class_name: servant.class.to_string(),
+            rarity: servant.rarity.value(),
+        })
     }
 }
 
