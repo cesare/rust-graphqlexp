@@ -3,7 +3,10 @@ use juniper::{
     GraphQLObject,
 };
 
-use graphqlexp_app::usecase::ServantRegistration;
+use graphqlexp_app::usecase::{
+    ServantRegistration,
+    Servant as ServantModel,
+};
 
 #[derive(GraphQLObject)]
 pub(crate) struct Servant {
@@ -11,6 +14,17 @@ pub(crate) struct Servant {
     pub name: String,
     pub class_name: String,
     pub rarity: i32,
+}
+
+impl From<ServantModel> for Servant {
+    fn from(model: ServantModel) -> Self {
+        Self {
+            id: model.id.value,
+            name: model.name.to_owned(),
+            class_name: model.class.to_string(),
+            rarity: model.rarity.value(),
+        }
+    }
 }
 
 #[derive(GraphQLInputObject)]

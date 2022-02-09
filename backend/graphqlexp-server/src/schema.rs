@@ -29,12 +29,7 @@ impl QueryRoot {
 
         match result {
             Some(servant) => {
-                Ok(Servant {
-                    id: servant.id.value,
-                    name: servant.name,
-                    class_name: servant.class.to_string(),
-                    rarity: servant.rarity.value(),
-                })
+                Ok(servant.into())
             }
             _ => {
                 Err(FieldError::new(
@@ -49,14 +44,9 @@ impl QueryRoot {
         let usecase = context.usecases.list_servants_usecase();
         let servants = usecase.execute().await?;
 
-        let results = servants.iter().map(|servant|
-            Servant {
-                id: servant.id.value,
-                name: servant.name.to_owned(),
-                class_name: servant.class.to_string(),
-                rarity: servant.rarity.value(),
-            }
-        ).collect();
+        let results = servants.into_iter()
+            .map(|servant| servant.into())
+            .collect();
         Ok(results)
     }
 }
@@ -68,13 +58,7 @@ impl MutationRoot {
     async fn create_servant(context: &Context, input: ServantInput) -> FieldResult<Servant> {
         let usecase = context.usecases.register_servant_usecase();
         let servant = usecase.execute(input.into()).await?;
-
-        Ok(Servant {
-            id: servant.id.value,
-            name: servant.name.to_owned(),
-            class_name: servant.class.to_string(),
-            rarity: servant.rarity.value(),
-        })
+        Ok(servant.into())
     }
 }
 
