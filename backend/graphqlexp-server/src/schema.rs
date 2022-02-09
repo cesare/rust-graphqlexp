@@ -8,7 +8,6 @@ use juniper::{
 
 use graphqlexp_app::{
     modules::UsecasesModule,
-    usecase::ServantRegistration,
 };
 
 mod servant;
@@ -68,12 +67,7 @@ pub struct MutationRoot;
 impl MutationRoot {
     async fn create_servant(context: &Context, input: ServantInput) -> FieldResult<Servant> {
         let usecase = context.usecases.register_servant_usecase();
-        let attributes = ServantRegistration {
-            name: input.name,
-            class_name: input.class_name,
-            rarity: input.rarity,
-        };
-        let servant = usecase.execute(attributes).await?;
+        let servant = usecase.execute(input.into()).await?;
 
         Ok(Servant {
             id: servant.id.value,
