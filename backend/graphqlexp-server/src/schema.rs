@@ -2,8 +2,6 @@ use juniper::{
     EmptySubscription,
     FieldError,
     FieldResult,
-    GraphQLInputObject,
-    GraphQLObject,
     RootNode,
     graphql_value
 };
@@ -13,21 +11,8 @@ use graphqlexp_app::{
     usecase::ServantRegistration,
 };
 
-#[derive(GraphQLObject)]
-struct Servant {
-    id: i32,
-    name: String,
-    class_name: String,
-    rarity: i32,
-}
-
-#[derive(GraphQLInputObject)]
-#[graphql(description = "Servant Input")]
-pub struct ServantInput {
-    pub name: String,
-    pub class_name: String,
-    pub rarity: i32,
-}
+mod servant;
+use servant::{Servant, ServantInput};
 
 pub struct Context {
     pub usecases: UsecasesModule,
