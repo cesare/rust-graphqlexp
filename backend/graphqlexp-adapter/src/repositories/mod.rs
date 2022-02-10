@@ -2,6 +2,7 @@ use std::marker::PhantomData;
 
 use crate::persistence::Database;
 
+pub mod profile;
 pub mod servant;
 
 pub struct Repository<T> {
