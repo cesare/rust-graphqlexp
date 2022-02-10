@@ -15,8 +15,20 @@ model Servant {
   name String @db.VarChar(100)
   className String @db.VarChar(64) @map(name: "class_name")
   rarity Int
+  profiles Profile[]
   createdAt DateTime @db.Timestamptz(3) @default(now()) @map(name: "created_at")
   updatedAt DateTime @db.Timestamptz(3) @default(now()) @updatedAt @map(name: "updated_at")
 
   @@map(name: "servants")
+}
+
+model Profile {
+  id String @id @db.VarChar(64) @default(cuid())
+  servantId Int @map(name: "servant_id")
+  servant Servant @relation(fields: [servantId], references: [id])
+  number Int
+  text String @db.Text
+
+  @@map(name: "profiles")
+  @@index(name: "profiles_servant_id_idx", fields: [servantId])
 }
