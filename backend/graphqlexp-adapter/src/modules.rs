@@ -1,7 +1,10 @@
 use anyhow::Result;
 
 use graphqlexp_kernel::{
-    models::servant::Servant,
+    models::{
+        profile::Profile,
+        servant::Servant,
+    },
 };
 use crate::{
     persistence::Database,
@@ -29,6 +32,10 @@ impl RepositoriesModule {
     }
 
     pub fn servant_repository(&self) -> Repository<Servant> {
+        Repository::new(self.database.clone())
+    }
+
+    pub fn profile_repository(&self) -> Repository<Profile> {
         Repository::new(self.database.clone())
     }
 }
