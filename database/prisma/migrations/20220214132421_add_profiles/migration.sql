@@ -2,7 +2,7 @@
 CREATE TABLE "profiles" (
     "id" VARCHAR(64) NOT NULL,
     "servant_id" INTEGER NOT NULL,
-    "number" INTEGER NOT NULL,
+    "position" INTEGER NOT NULL,
     "text" TEXT NOT NULL,
 
     CONSTRAINT "profiles_pkey" PRIMARY KEY ("id")

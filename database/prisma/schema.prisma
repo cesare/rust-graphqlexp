@@ -26,7 +26,7 @@ model Profile {
   id String @id @db.VarChar(64) @default(cuid())
   servantId Int @map(name: "servant_id")
   servant Servant @relation(fields: [servantId], references: [id])
-  number Int
+  position Int
   text String @db.Text
 
   @@map(name: "profiles")
