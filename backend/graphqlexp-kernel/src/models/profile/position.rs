@@ -1,11 +1,11 @@
 use anyhow::{Result, bail};
 
-pub struct ProfileNumber(i32);
+pub struct ProfilePosition(i32);
 
-impl ProfileNumber {
+impl ProfilePosition {
     pub fn create(value: i32) -> Result<Self> {
         if value < 1 {
-            bail!("invalid profile number: {}", value);
+            bail!("invalid profile position: {}", value);
         }
         Ok(Self(value))
     }

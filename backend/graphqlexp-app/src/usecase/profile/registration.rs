@@ -4,13 +4,13 @@ use anyhow::Result;
 
 use graphqlexp_adapter::{
     modules::RepositoriesModule,
-    repositories::profile::{NewProfile, Profile, ProfileNumber, ProfileRepository},
+    repositories::profile::{NewProfile, Profile, ProfilePosition, ProfileRepository},
     repositories::servant::ServantId,
 };
 
 pub struct ProfileAttributes {
     pub servant_id: i32,
-    pub number: i32,
+    pub position: i32,
     pub text: String,
 }
 
@@ -29,7 +29,7 @@ impl ProfileRegistration {
         let repository = self.repositories.profile_repository();
         let new_profile = NewProfile {
             servant_id: ServantId::new(attrs.servant_id),
-            number: ProfileNumber::create(attrs.number)?,
+            position: ProfilePosition::create(attrs.position)?,
             text: attrs.text,
         };
         let profile = repository.register(new_profile).await?;

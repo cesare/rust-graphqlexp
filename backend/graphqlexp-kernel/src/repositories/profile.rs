@@ -2,13 +2,13 @@ use anyhow::Result;
 use async_trait::async_trait;
 
 use crate::models::{
-    profile::{Profile, ProfileId, ProfileNumber},
+    profile::{Profile, ProfileId, ProfilePosition},
     servant::ServantId,
 };
 
 pub struct NewProfile {
     pub servant_id: ServantId,
-    pub number: ProfileNumber,
+    pub position: ProfilePosition,
     pub text: String,
 }
 

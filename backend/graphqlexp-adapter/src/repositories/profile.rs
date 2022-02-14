@@ -4,7 +4,7 @@ use sqlx::query_as;
 
 pub use graphqlexp_kernel::{
     models::{
-        profile::{Profile, ProfileId, ProfileNumber},
+        profile::{Profile, ProfileId, ProfilePosition},
         servant::ServantId
     },
     repositories::profile::{NewProfile, ProfileRepository},
@@ -17,7 +17,7 @@ impl ProfileRepository for Repository<Profile> {
     async fn find(&self, id: &ProfileId) -> Result<Option<Profile>> {
         let pool = self.database.pool.clone();
         let statement = "
-            select id, servant_id, number, text
+            select id, servant_id, position, text
             from profiles
             where id = $1
             limit 1
@@ -35,10 +35,10 @@ impl ProfileRepository for Repository<Profile> {
     async fn list_for_servant(&self, servant_id: &ServantId) -> Result<Vec<Profile>> {
         let pool = self.database.pool.clone();
         let statement = "
-            select id, servant_id, number, text
+            select id, servant_id, position, text
             from profiles
             where servant_id = $1
-            order by number
+            order by position
         ";
         let results = query_as::<_, ProfileRecord>(statement)
             .bind(&servant_id.value)
@@ -56,14 +56,14 @@ impl ProfileRepository for Repository<Profile> {
     async fn register(&self, profile: NewProfile) -> Result<Profile> {
         let pool = self.database.pool.clone();
         let statement = "
-            insert into profiles (id, servant_id, number, text)
+            insert into profiles (id, servant_id, position, text)
             values ($1, $2, $3, $4)
-            returning id, servant_id, number, text
+            returning id, servant_id, position, text
         ";
         let result = query_as::<_, ProfileRecord>(statement)
             .bind(cuid::cuid()?)
             .bind(profile.servant_id.value)
-            .bind(profile.number.value())
+            .bind(profile.position.value())
             .bind(profile.text)
             .fetch_one(&*pool)
             .await?;
