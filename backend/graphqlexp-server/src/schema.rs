@@ -10,6 +10,8 @@ use graphqlexp_app::{
     modules::UsecasesModule,
 };
 
+mod profile;
+use profile::{Profile, ProfileInput};
 mod servant;
 use servant::{Servant, ServantInput};
 
@@ -59,6 +61,12 @@ impl MutationRoot {
         let usecase = context.usecases.register_servant_usecase();
         let servant = usecase.execute(input.into()).await?;
         Ok(servant.into())
+    }
+
+    async fn register_profile(context: &Context, input: ProfileInput) -> FieldResult<Profile> {
+        let usecase = context.usecases.profile_registration_usecase();
+        let profile = usecase.execute(input.into()).await?;
+        Ok(profile.into())
     }
 }
 

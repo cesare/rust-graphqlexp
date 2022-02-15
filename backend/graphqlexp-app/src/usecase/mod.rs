@@ -11,5 +11,8 @@ pub use register_servant::{RegisterServant, ServantRegistration};
 pub use show_servant::ShowServant;
 
 pub use graphqlexp_adapter::{
-    repositories::servant::Servant,
+    repositories::{
+        profile::Profile,
+        servant::Servant,
+    },
 };
