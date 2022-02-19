@@ -13,7 +13,7 @@ pub struct Repository<T> {
 impl<T> Repository<T> {
     pub fn new(database: Database) -> Self {
         Self {
-            database: database,
+            database,
             _marker: PhantomData,
         }
     }

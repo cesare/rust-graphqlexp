@@ -8,7 +8,7 @@ pub struct Id<T, S> {
 impl<T, S> Id<T, S> {
     pub fn new(value: S) -> Self {
         Self {
-            value: value,
+            value,
             _marker: PhantomData,
         }
     }
