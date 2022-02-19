@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::path::Path;
 
 use anyhow::Result;
 use serde::Deserialize;
@@ -14,7 +14,7 @@ pub struct GraphqlexpConfig {
 }
 
 impl GraphqlexpConfig {
-    pub async fn load(path: &PathBuf) -> Result<Self> {
+    pub async fn load(path: &Path) -> Result<Self> {
         let mut file = File::open(path).await?;
         let mut content = String::new();
         file.read_to_string(&mut content).await?;
