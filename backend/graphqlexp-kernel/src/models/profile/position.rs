@@ -1,6 +1,6 @@
 use anyhow::{Result, bail};
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, PartialOrd)]
 pub struct ProfilePosition(i32);
 
 impl ProfilePosition {
@@ -41,6 +41,14 @@ mod tests {
     fn creation_with_negative_values() {
         let position = ProfilePosition::create(-1);
         assert!(position.is_err());
+    }
+
+    #[test]
+    fn ordering_and_equality() {
+        assert!(ProfilePosition(3) == ProfilePosition(3));
+        assert!(ProfilePosition(3) <= ProfilePosition(3));
+        assert!(ProfilePosition(1) <= ProfilePosition(2));
+        assert!(ProfilePosition(1) <  ProfilePosition(2));
     }
 
     #[test]
