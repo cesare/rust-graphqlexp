@@ -53,6 +53,27 @@ impl ProfileRepository for Repository<Profile> {
         Ok(profiles)
     }
 
+    async fn list_for_ids(&self, ids: &[ProfileId]) -> Result<Vec<Profile>> {
+        let pool = self.database.pool.clone();
+        let statement = "
+            select id, servant_id, position, text
+            from profiles
+            where id = $1
+        ";
+        let raw_ids = ids.iter().map(|id| id.value.to_owned()).collect::<String>();
+        let results = query_as::<_, ProfileRecord>(statement)
+            .bind(raw_ids)
+            .fetch_all(&*pool)
+            .await?;
+
+        let mut profiles: Vec<Profile> = vec![];
+        for record in results {
+            let profile = record.try_into()?;
+            profiles.push(profile);
+        }
+        Ok(profiles)
+    }
+
     async fn register(&self, profile: NewProfile) -> Result<Profile> {
         let pool = self.database.pool.clone();
         let statement = "
