@@ -929,6 +929,7 @@ dependencies = [
  "actix-rt",
  "actix-web",
  "anyhow",
+ "async-trait",
  "dataloader",
  "graphqlexp-app",
  "juniper",
