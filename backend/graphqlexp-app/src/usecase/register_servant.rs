@@ -4,8 +4,9 @@ use std::sync::Arc;
 use anyhow::Result;
 
 use graphqlexp_adapter::{
+    models::servant::{Class, Rarity, Servant},
     modules::RepositoriesModule,
-    repositories::servant::{Class, NewServant, Rarity, Servant, ServantRepository},
+    repositories::servant::{NewServant, ServantRepository},
 };
 
 pub struct ServantRegistration {

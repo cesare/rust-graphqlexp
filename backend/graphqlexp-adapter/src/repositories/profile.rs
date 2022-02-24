@@ -2,11 +2,13 @@ use anyhow::Result;
 use async_trait::async_trait;
 use sqlx::query_as;
 
-pub use graphqlexp_kernel::{
+use graphqlexp_kernel::{
     models::{
-        profile::{Profile, ProfileId, ProfilePosition},
+        profile::{Profile, ProfileId},
         servant::ServantId
     },
+};
+pub use graphqlexp_kernel::{
     repositories::profile::{NewProfile, ProfileRepository},
 };
 use super::Repository;

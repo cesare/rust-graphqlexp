@@ -3,9 +3,12 @@ use std::sync::Arc;
 use anyhow::Result;
 
 use graphqlexp_adapter::{
+    models::{
+        profile::{Profile, ProfilePosition},
+        servant::{ServantId},
+    },
     modules::RepositoriesModule,
-    repositories::profile::{NewProfile, Profile, ProfilePosition, ProfileRepository},
-    repositories::servant::ServantId,
+    repositories::profile::{NewProfile, ProfileRepository},
 };
 
 pub struct ProfileAttributes {

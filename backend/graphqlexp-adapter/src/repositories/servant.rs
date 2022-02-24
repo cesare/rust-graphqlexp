@@ -2,8 +2,10 @@ use anyhow::Result;
 use async_trait::async_trait;
 use sqlx::query_as;
 
+use graphqlexp_kernel::{
+    models::servant::{Servant, ServantId},
+};
 pub use graphqlexp_kernel::{
-    models::servant::{Class, Rarity, Servant, ServantId},
     repositories::servant::{NewServant, ServantRepository},
 };
 use super::Repository;
