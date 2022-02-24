@@ -9,10 +9,3 @@ pub use profile::{
 pub use list_servants::ListServants;
 pub use register_servant::{RegisterServant, ServantRegistration};
 pub use show_servant::ShowServant;
-
-pub use graphqlexp_adapter::{
-    repositories::{
-        profile::Profile,
-        servant::Servant,
-    },
-};

@@ -3,9 +3,11 @@ use juniper::{
     GraphQLObject,
 };
 
+use graphqlexp_app::models::profile::{
+    Profile as ProfileModel,
+};
 use graphqlexp_app::usecase::{
     ProfileAttributes,
-    Profile as ProfileModel
 };
 
 #[derive(GraphQLObject)]
