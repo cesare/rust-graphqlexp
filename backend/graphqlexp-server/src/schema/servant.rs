@@ -3,11 +3,9 @@ use juniper::{
     GraphQLObject,
 };
 
-use graphqlexp_app::models::servant::{
-    Servant as ServantModel,
-};
-use graphqlexp_app::usecase::{
-    ServantRegistration,
+use graphqlexp_app::{
+    models::servant::Servant as ServantModel,
+    usecase::ServantRegistration,
 };
 
 #[derive(GraphQLObject)]
