@@ -8,7 +8,7 @@ use crate::usecase::{ListServants, ProfileRegistration, RegisterServant, ShowSer
 
 #[derive(Clone)]
 pub struct UsecasesModule {
-    repositories: Arc<RepositoriesModule>,
+    pub repositories: Arc<RepositoriesModule>,
 }
 
 impl UsecasesModule {
