@@ -1,3 +1,5 @@
+use std::convert::From;
+
 use chrono::{DateTime, Local};
 use super::id::Id;
 
@@ -8,6 +10,12 @@ mod class;
 pub use class::Class;
 
 pub type ServantId = Id<Servant, i32>;
+
+impl From<i32> for ServantId {
+    fn from(value: i32) -> Self {
+        Self::new(value)
+    }
+}
 
 pub struct Servant {
     pub id: ServantId,

@@ -1,3 +1,5 @@
+use std::convert::From;
+
 use juniper::{
     EmptySubscription,
     FieldError,
@@ -7,7 +9,6 @@ use juniper::{
 };
 
 use graphqlexp_app::{
-    models::servant::ServantId,
     modules::UsecasesModule,
     repositories::servant::ServantRepository,
 };
@@ -29,8 +30,7 @@ pub struct QueryRoot;
 impl QueryRoot {
     async fn servant(context: &Context, id: i32) -> FieldResult<Servant> {
         let repository = context.usecases.repositories.servant_repository();
-        let servant_id = ServantId::new(id);
-        let result = repository.find(servant_id).await?;
+        let result = repository.find(id.into()).await?;
 
         match result {
             Some(servant) => {
