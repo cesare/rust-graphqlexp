@@ -7,7 +7,9 @@ use juniper::{
 };
 
 use graphqlexp_app::{
+    models::servant::ServantId,
     modules::UsecasesModule,
+    repositories::servant::ServantRepository,
 };
 
 mod profile;
@@ -26,8 +28,9 @@ pub struct QueryRoot;
 #[juniper::graphql_object(Context = Context)]
 impl QueryRoot {
     async fn servant(context: &Context, id: i32) -> FieldResult<Servant> {
-        let usecase = context.usecases.show_servant_usecase();
-        let result = usecase.find(id).await?;
+        let repository = context.usecases.repositories.servant_repository();
+        let servant_id = ServantId::new(id);
+        let result = repository.find(servant_id).await?;
 
         match result {
             Some(servant) => {
@@ -43,8 +46,8 @@ impl QueryRoot {
     }
 
     async fn list_servants(context: &Context) -> FieldResult<Vec<Servant>> {
-        let usecase = context.usecases.list_servants_usecase();
-        let servants = usecase.execute().await?;
+        let repository = context.usecases.repositories.servant_repository();
+        let servants = repository.list().await?;
 
         let results = servants.into_iter()
             .map(|servant| servant.into())
