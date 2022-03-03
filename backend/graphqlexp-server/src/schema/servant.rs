@@ -1,19 +1,43 @@
-use juniper::{
-    GraphQLInputObject,
-    GraphQLObject,
-};
+use juniper::GraphQLInputObject;
 
 use graphqlexp_app::{
     models::servant::Servant as ServantModel,
     usecase::ServantRegistration,
 };
 
-#[derive(GraphQLObject)]
+use crate::schema::{
+    Context,
+    profile::Profile,
+};
+
 pub(super) struct Servant {
     id: i32,
     name: String,
     class_name: String,
     rarity: i32,
+}
+
+#[juniper::graphql_object(Context = Context)]
+impl Servant {
+    fn id(&self) -> i32 {
+        self.id
+    }
+
+    fn name(&self) -> &str {
+        &self.name
+    }
+
+    fn class_name(&self) -> &str {
+        &self.class_name
+    }
+
+    fn rarity(&self) -> i32 {
+        self.rarity
+    }
+
+    fn profiles(&self, _context: &Context) -> Vec<Profile> {
+        vec![]
+    }
 }
 
 impl From<ServantModel> for Servant {
