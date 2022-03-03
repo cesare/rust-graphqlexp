@@ -2,6 +2,7 @@ use juniper::GraphQLInputObject;
 
 use graphqlexp_app::{
     models::servant::Servant as ServantModel,
+    repositories::profile::ProfileRepository,
     usecase::ServantRegistration,
 };
 
@@ -35,8 +36,14 @@ impl Servant {
         self.rarity
     }
 
-    fn profiles(&self, _context: &Context) -> Vec<Profile> {
-        vec![]
+    async fn profiles(&self, context: &Context) -> Vec<Profile> {
+        let repository = context.usecases.repositories.profile_repository();
+        repository.list_for_servant(&self.id.into())
+            .await
+            .unwrap()
+            .into_iter()
+            .map(|result| result.into())
+            .collect()
     }
 }
 
