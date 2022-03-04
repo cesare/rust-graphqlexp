@@ -12,33 +12,30 @@ use crate::schema::{
 };
 
 pub(super) struct Servant {
-    id: i32,
-    name: String,
-    class_name: String,
-    rarity: i32,
+    model: ServantModel,
 }
 
 #[juniper::graphql_object(Context = Context)]
 impl Servant {
     fn id(&self) -> i32 {
-        self.id
+        self.model.id.value
     }
 
     fn name(&self) -> &str {
-        &self.name
+        &self.model.name
     }
 
-    fn class_name(&self) -> &str {
-        &self.class_name
+    fn class_name(&self) -> String {
+        self.model.class.to_string()
     }
 
     fn rarity(&self) -> i32 {
-        self.rarity
+        self.model.rarity.value()
     }
 
     async fn profiles(&self, context: &Context) -> Vec<Profile> {
         let repository = context.usecases.repositories.profile_repository();
-        repository.list_for_servant(&self.id.into())
+        repository.list_for_servant(&self.model.id)
             .await
             .unwrap()
             .into_iter()
@@ -50,10 +47,7 @@ impl Servant {
 impl From<ServantModel> for Servant {
     fn from(model: ServantModel) -> Self {
         Self {
-            id: model.id.value,
-            name: model.name.to_owned(),
-            class_name: model.class.to_string(),
-            rarity: model.rarity.value(),
+            model,
         }
     }
 }

@@ -1,6 +1,5 @@
 use juniper::{
     GraphQLInputObject,
-    GraphQLObject,
 };
 
 use graphqlexp_app::{
@@ -8,21 +7,29 @@ use graphqlexp_app::{
     usecase::ProfileAttributes,
 };
 
-#[derive(GraphQLObject)]
 pub(super) struct Profile {
-    id: String,
-    servant_id: i32,
-    position: i32,
-    text: String,
+    model: ProfileModel,
+}
+
+#[juniper::graphql_object]
+impl Profile {
+    fn id(&self) -> &str {
+        &self.model.id.value
+    }
+
+    fn position(&self) -> i32 {
+        self.model.position.value()
+    }
+
+    fn text(&self) -> &str {
+        &self.model.text
+    }
 }
 
 impl From<ProfileModel> for Profile {
     fn from(model: ProfileModel) -> Self {
         Self {
-            id: model.id.value,
-            servant_id: model.servant_id.value,
-            position: model.position.value(),
-            text: model.text,
+            model,
         }
     }
 }
