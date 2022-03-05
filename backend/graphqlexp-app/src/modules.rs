@@ -3,7 +3,7 @@ use std::sync::Arc;
 use anyhow::Result;
 
 pub use graphqlexp_adapter::modules::RepositoriesModuleConfig;
-use graphqlexp_adapter::modules::{RepositoriesModule};
+pub use graphqlexp_adapter::modules::RepositoriesModule;
 use crate::usecase::{ProfileRegistration, RegisterServant};
 
 #[derive(Clone)]
