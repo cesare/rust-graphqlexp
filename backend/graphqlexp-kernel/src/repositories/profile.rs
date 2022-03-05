@@ -16,7 +16,6 @@ pub struct NewProfile {
 pub trait ProfileRepository {
     async fn find(&self, id: &ProfileId) -> Result<Option<Profile>>;
     async fn list_for_servant(&self, servant_id: &ServantId) -> Result<Vec<Profile>>;
-    async fn list_for_ids(&self, ids: &[ProfileId]) -> Result<Vec<Profile>>;
     async fn list_for_servants(&self, ids: &[ServantId]) -> Result<Vec<Profile>>;
     async fn register(&self, profile: NewProfile) -> Result<Profile>;
 }
