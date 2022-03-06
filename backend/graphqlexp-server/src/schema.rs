@@ -18,6 +18,10 @@ use graphqlexp_app::{
         Repository,
         servant::ServantRepository,
     },
+    usecase::{
+        ProfileRegistration,
+        RegisterServant,
+    }
 };
 
 mod profile;
@@ -36,6 +40,14 @@ impl Context {
 
     pub fn profile_repository(&self) -> Repository<ProfileModel> {
         self.usecases.repositories.profile_repository()
+    }
+
+    pub fn register_servant_usecase(&self) -> RegisterServant {
+        self.usecases.register_servant_usecase()
+    }
+
+    pub fn profile_registration_usecase(&self) -> ProfileRegistration {
+        self.usecases.profile_registration_usecase()
     }
 }
 
@@ -78,13 +90,13 @@ pub struct MutationRoot;
 #[juniper::graphql_object(Context = Context)]
 impl MutationRoot {
     async fn create_servant(context: &Context, input: ServantInput) -> FieldResult<Servant> {
-        let usecase = context.usecases.register_servant_usecase();
+        let usecase = context.register_servant_usecase();
         let servant = usecase.execute(input.into()).await?;
         Ok(servant.into())
     }
 
     async fn register_profile(context: &Context, input: ProfileInput) -> FieldResult<Profile> {
-        let usecase = context.usecases.profile_registration_usecase();
+        let usecase = context.profile_registration_usecase();
         let profile = usecase.execute(input.into()).await?;
         Ok(profile.into())
     }
