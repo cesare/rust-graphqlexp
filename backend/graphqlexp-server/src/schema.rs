@@ -9,8 +9,15 @@ use juniper::{
 };
 
 use graphqlexp_app::{
+    models::{
+        servant::Servant as ServantModel,
+        profile::Profile as ProfileModel,
+    },
     modules::UsecasesModule,
-    repositories::servant::ServantRepository,
+    repositories::{
+        Repository,
+        servant::ServantRepository,
+    },
 };
 
 mod profile;
@@ -22,6 +29,16 @@ pub struct Context {
     pub usecases: UsecasesModule,
 }
 
+impl Context {
+    pub fn servant_repository(&self) -> Repository<ServantModel> {
+        self.usecases.repositories.servant_repository()
+    }
+
+    pub fn profile_repository(&self) -> Repository<ProfileModel> {
+        self.usecases.repositories.profile_repository()
+    }
+}
+
 impl juniper::Context for Context {}
 
 pub struct QueryRoot;
@@ -29,7 +46,7 @@ pub struct QueryRoot;
 #[juniper::graphql_object(Context = Context)]
 impl QueryRoot {
     async fn servant(context: &Context, id: i32) -> FieldResult<Servant> {
-        let repository = context.usecases.repositories.servant_repository();
+        let repository = context.servant_repository();
         let result = repository.find(id.into()).await?;
 
         match result {
@@ -46,7 +63,7 @@ impl QueryRoot {
     }
 
     async fn list_servants(context: &Context) -> FieldResult<Vec<Servant>> {
-        let repository = context.usecases.repositories.servant_repository();
+        let repository = context.servant_repository();
         let servants = repository.list().await?;
 
         let results = servants.into_iter()
