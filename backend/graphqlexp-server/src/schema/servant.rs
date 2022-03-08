@@ -1,4 +1,4 @@
-use juniper::GraphQLInputObject;
+use juniper::{FieldResult, GraphQLInputObject};
 
 use graphqlexp_app::{
     models::servant::Servant as ServantModel,
@@ -33,14 +33,14 @@ impl Servant {
         self.model.rarity.value()
     }
 
-    async fn profiles(&self, context: &Context) -> Vec<Profile> {
+    async fn profiles(&self, context: &Context) -> FieldResult<Vec<Profile>> {
         let repository = context.usecases.repositories.profile_repository();
-        repository.list_for_servant(&self.model.id)
-            .await
-            .unwrap()
+        let results = repository.list_for_servant(&self.model.id).await?;
+        let profiles = results
             .into_iter()
             .map(|result| result.into())
-            .collect()
+            .collect::<Vec<Profile>>();
+        Ok(profiles)
     }
 }
 
