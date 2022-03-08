@@ -1,3 +1,4 @@
+use std::hash::{Hash, Hasher};
 use std::marker::PhantomData;
 
 pub struct Id<T, S> {
@@ -13,3 +14,23 @@ impl<T, S> Id<T, S> {
         }
     }
 }
+
+impl<T, S: Clone> Clone for Id<T, S> {
+    fn clone(&self) -> Self {
+        Self::new(self.value.clone())
+    }
+}
+
+impl<T, S: Hash> Hash for Id<T, S> {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.value.hash(state);
+    }
+}
+
+impl<T, S: PartialEq> PartialEq for Id<T, S> {
+    fn eq(&self, other: &Self) -> bool {
+        self.value == other.value
+    }
+}
+
+impl<T, S: Eq> Eq for Id<T, S> {}
