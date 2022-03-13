@@ -12,9 +12,15 @@ pub struct UsecasesModule {
 }
 
 impl UsecasesModule {
+    pub fn new(repositories: RepositoriesModule) -> Self {
+        Self {
+            repositories: Arc::new(repositories)
+        }
+    }
+
     pub async fn create(config: &dyn RepositoriesModuleConfig) -> Result<Self> {
         let repositories = RepositoriesModule::create(config).await?;
-        Ok(Self { repositories: Arc::new(repositories) })
+        Ok(Self::new(repositories))
     }
 
     pub fn register_servant_usecase(&self) -> RegisterServant {
