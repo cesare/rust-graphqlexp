@@ -8,7 +8,7 @@ use actix_web::{
 use anyhow::Result;
 use juniper::http::GraphQLRequest;
 
-use graphqlexp_app::modules::UsecasesModule;
+use graphqlexp_app::modules::RepositoriesModule;
 use crate::schema::{Context, Schema};
 
 pub fn configure_routes(cfg: &mut ServiceConfig) {
@@ -17,9 +17,9 @@ pub fn configure_routes(cfg: &mut ServiceConfig) {
     );
 }
 
-async fn graphql(usecases: Data<UsecasesModule>, schema: Data<Schema>, data: Json<GraphQLRequest>) -> Result<HttpResponse, Error> {
+async fn graphql(repositories: Data<RepositoriesModule>, schema: Data<Schema>, data: Json<GraphQLRequest>) -> Result<HttpResponse, Error> {
     let context = Context {
-        usecases: usecases.get_ref().to_owned(),
+        repositories: repositories.get_ref().to_owned(),
     };
 
     let res = data.execute(&schema, &context).await;

@@ -15,6 +15,7 @@ pub trait RepositoriesModuleConfig {
     fn database_url(&self) -> String;
 }
 
+#[derive(Clone)]
 pub struct RepositoriesModule {
     database: Database,
 }

@@ -13,7 +13,7 @@ use graphqlexp_app::{
         servant::Servant as ServantModel,
         profile::Profile as ProfileModel,
     },
-    modules::UsecasesModule,
+    modules::{RepositoriesModule, UsecasesModule},
     repositories::{
         Repository,
         servant::ServantRepository,
@@ -30,24 +30,26 @@ mod servant;
 use servant::{Servant, ServantInput};
 
 pub struct Context {
-    pub usecases: UsecasesModule,
+    pub repositories: RepositoriesModule,
 }
 
 impl Context {
     pub fn servant_repository(&self) -> Repository<ServantModel> {
-        self.usecases.repositories.servant_repository()
+        self.repositories.servant_repository()
     }
 
     pub fn profile_repository(&self) -> Repository<ProfileModel> {
-        self.usecases.repositories.profile_repository()
+        self.repositories.profile_repository()
     }
 
     pub fn register_servant_usecase(&self) -> RegisterServant {
-        self.usecases.register_servant_usecase()
+        let usecases = UsecasesModule::new(self.repositories.clone());
+        usecases.register_servant_usecase()
     }
 
     pub fn profile_registration_usecase(&self) -> ProfileRegistration {
-        self.usecases.profile_registration_usecase()
+        let usecases = UsecasesModule::new(self.repositories.clone());
+        usecases.profile_registration_usecase()
     }
 }
 

@@ -34,7 +34,7 @@ impl Servant {
     }
 
     async fn profiles(&self, context: &Context) -> FieldResult<Vec<Profile>> {
-        let repository = context.usecases.repositories.profile_repository();
+        let repository = context.profile_repository();
         let results = repository.list_for_servant(&self.model.id).await?;
         let profiles = results
             .into_iter()
