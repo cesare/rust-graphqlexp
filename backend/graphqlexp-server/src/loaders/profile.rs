@@ -4,16 +4,24 @@ use anyhow::Result;
 use async_trait::async_trait;
 use dataloader::BatchFn;
 
-use graphqlexp_app::models::{
-    profile::Profile,
-    servant::ServantId,
+use graphqlexp_app::{
+    models::{
+        profile::Profile,
+        servant::ServantId,
+    },
+    repositories::{
+        profile::ProfileRepository,
+        Repository,
+    },
 };
 
-pub struct ServantProfilesLoader {}
+pub struct ServantProfilesLoader {
+    profile_repository: Repository<Profile>,
+}
 
 impl ServantProfilesLoader {
-    pub async fn load_profiles(&self, _ids: &[ServantId]) -> Result<Vec<Profile>> {
-        todo!()
+    pub async fn load_profiles(&self, ids: &[ServantId]) -> Result<Vec<Profile>> {
+        self.profile_repository.list_for_servants(ids).await
     }
 
     fn create_servant_profiles(&self, profiles: Vec<Profile>) -> HashMap<ServantId, Vec<Profile>> {
