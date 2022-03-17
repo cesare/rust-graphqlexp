@@ -1,6 +1,6 @@
 use anyhow::{Result, bail};
 
-#[derive(Debug, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, PartialEq, PartialOrd)]
 pub struct ProfilePosition(i32);
 
 impl ProfilePosition {
