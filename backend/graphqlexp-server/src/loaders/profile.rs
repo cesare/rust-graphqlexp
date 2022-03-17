@@ -17,11 +17,11 @@ use graphqlexp_app::{
 
 type ProfileMap = HashMap<ServantId, Vec<Profile>>;
 
-pub struct ServantProfilesLoader {
+pub struct ServantProfilesLoadFn {
     profile_repository: Repository<Profile>,
 }
 
-impl ServantProfilesLoader {
+impl ServantProfilesLoadFn {
     pub async fn load_profiles(&self, ids: &[ServantId]) -> Result<Vec<Profile>> {
         self.profile_repository.list_for_servants(ids).await
     }
@@ -44,7 +44,7 @@ impl ServantProfilesLoader {
 }
 
 #[async_trait]
-impl BatchFn<ServantId, Vec<Profile>> for ServantProfilesLoader {
+impl BatchFn<ServantId, Vec<Profile>> for ServantProfilesLoadFn {
     async fn load(&mut self, keys: &[ServantId]) -> ProfileMap {
         let profiles = self.load_profiles(keys).await.unwrap();
         self.create_servant_profiles(profiles)
