@@ -15,6 +15,8 @@ use graphqlexp_app::{
     },
 };
 
+type ProfileMap = HashMap<ServantId, Vec<Profile>>;
+
 pub struct ServantProfilesLoader {
     profile_repository: Repository<Profile>,
 }
@@ -24,8 +26,8 @@ impl ServantProfilesLoader {
         self.profile_repository.list_for_servants(ids).await
     }
 
-    fn create_servant_profiles(&self, profiles: Vec<Profile>) -> HashMap<ServantId, Vec<Profile>> {
-        let mut map: HashMap<ServantId, Vec<Profile>> = HashMap::new();
+    fn create_servant_profiles(&self, profiles: Vec<Profile>) -> ProfileMap {
+        let mut map: ProfileMap = HashMap::new();
         for profile in profiles {
             let servant_id = profile.servant_id.clone();
 
@@ -43,7 +45,7 @@ impl ServantProfilesLoader {
 
 #[async_trait]
 impl BatchFn<ServantId, Vec<Profile>> for ServantProfilesLoader {
-    async fn load(&mut self, keys: &[ServantId]) -> HashMap<ServantId, Vec<Profile>> {
+    async fn load(&mut self, keys: &[ServantId]) -> ProfileMap {
         let profiles = self.load_profiles(keys).await.unwrap();
         self.create_servant_profiles(profiles)
     }
