@@ -41,12 +41,28 @@ impl ServantProfilesLoadFn {
         }
         map
     }
+
+    fn complete_profile_map(&self, ids: &[ServantId], map: ProfileMap) -> ProfileMap {
+        let mut target: ProfileMap = HashMap::new();
+        for id in ids {
+            match map.get(id) {
+                Some(profiles) => {
+                    target.insert(id.to_owned(), profiles.to_vec());
+                },
+                _ => {
+                    target.insert(id.to_owned(), vec![]);
+                },
+            }
+        }
+        target
+    }
 }
 
 #[async_trait]
 impl BatchFn<ServantId, Vec<Profile>> for ServantProfilesLoadFn {
     async fn load(&mut self, keys: &[ServantId]) -> ProfileMap {
         let profiles = self.load_profiles(keys).await.unwrap();
-        self.create_servant_profiles(profiles)
+        let profile_map = self.create_servant_profiles(profiles);
+        self.complete_profile_map(keys, profile_map)
     }
 }
