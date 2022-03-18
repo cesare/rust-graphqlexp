@@ -2,7 +2,10 @@ use std::collections::HashMap;
 
 use anyhow::Result;
 use async_trait::async_trait;
-use dataloader::BatchFn;
+use dataloader::{
+    BatchFn,
+    non_cached::Loader,
+};
 
 use graphqlexp_app::{
     models::{
@@ -66,3 +69,6 @@ impl BatchFn<ServantId, Vec<Profile>> for ServantProfilesLoadFn {
         self.complete_profile_map(keys, profile_map)
     }
 }
+
+#[allow(dead_code)]
+pub type ServantProfilesLoader = Loader<ServantId, Vec<Profile>, ServantProfilesLoadFn>;
