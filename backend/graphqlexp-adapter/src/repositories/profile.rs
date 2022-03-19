@@ -60,7 +60,7 @@ impl ProfileRepository for Repository<Profile> {
         let statement = "
             select id, servant_id, position, text
             from profiles
-            where servant_id = $1
+            where servant_id = any($1)
         ";
         let raw_ids: Vec<i32> = ids.iter().map(|id| id.value).collect();
         let results = query_as::<_, ProfileRecord>(statement)
