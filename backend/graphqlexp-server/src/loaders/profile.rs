@@ -12,6 +12,7 @@ use graphqlexp_app::{
         profile::Profile,
         servant::ServantId,
     },
+    modules::RepositoriesModule,
     repositories::{
         profile::ProfileRepository,
         Repository,
@@ -72,3 +73,22 @@ impl BatchFn<ServantId, Vec<Profile>> for ServantProfilesLoadFn {
 
 #[allow(dead_code)]
 pub type ServantProfilesLoader = Loader<ServantId, Vec<Profile>, ServantProfilesLoadFn>;
+
+pub struct LoaderFactory {
+    repositories: RepositoriesModule,
+}
+
+impl LoaderFactory {
+    pub fn new(repositories: &RepositoriesModule) -> Self {
+        Self {
+            repositories: repositories.clone(),
+        }
+    }
+
+    pub fn servant_profiles_loader(&self) -> ServantProfilesLoader {
+        let load_fn = ServantProfilesLoadFn {
+            profile_repository: self.repositories.profile_repository(),
+        };
+        Loader::new(load_fn)
+    }
+}
