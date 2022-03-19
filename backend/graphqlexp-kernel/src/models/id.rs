@@ -1,6 +1,7 @@
 use std::hash::{Hash, Hasher};
 use std::marker::PhantomData;
 
+#[derive(Debug)]
 pub struct Id<T, S> {
     pub value: S,
     _marker: PhantomData<T>,

@@ -17,6 +17,7 @@ impl From<i32> for ServantId {
     }
 }
 
+#[derive(Debug)]
 pub struct Servant {
     pub id: ServantId,
     pub name: String,
