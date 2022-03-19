@@ -2,13 +2,15 @@ use juniper::{FieldResult, GraphQLInputObject};
 
 use graphqlexp_app::{
     models::servant::Servant as ServantModel,
-    repositories::profile::ProfileRepository,
     usecase::ServantRegistration,
 };
 
-use crate::schema::{
-    Context,
-    profile::Profile,
+use crate::{
+    loaders::profile::LoaderFactory,
+    schema::{
+        Context,
+        profile::Profile,
+    },
 };
 
 pub(super) struct Servant {
@@ -34,12 +36,15 @@ impl Servant {
     }
 
     async fn profiles(&self, context: &Context) -> FieldResult<Vec<Profile>> {
-        let repository = context.profile_repository();
-        let results = repository.list_for_servant(&self.model.id).await?;
-        let profiles = results
+        let keys = vec![self.model.id.clone()];
+
+        let factory = LoaderFactory::new(&context.repositories);
+        let loader = factory.servant_profiles_loader();
+        let profile_map = loader.load_many(keys).await;
+        let profiles = profile_map.get(&self.model.id).unwrap().to_owned()
             .into_iter()
-            .map(|result| result.into())
-            .collect::<Vec<Profile>>();
+            .map(|profile| profile.into())
+            .collect();
         Ok(profiles)
     }
 }
