@@ -92,3 +92,10 @@ impl LoaderFactory {
         Loader::new(load_fn)
     }
 }
+
+pub(super) fn servant_profiles_loader(repositories: &RepositoriesModule) -> ServantProfilesLoader {
+    let load_fn = ServantProfilesLoadFn {
+        profile_repository: repositories.profile_repository(),
+    };
+    Loader::new(load_fn)
+}

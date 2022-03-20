@@ -24,6 +24,8 @@ use graphqlexp_app::{
     }
 };
 
+use crate::loaders::Loaders;
+
 mod profile;
 use profile::{Profile, ProfileInput};
 mod servant;
@@ -31,6 +33,7 @@ use servant::{Servant, ServantInput};
 
 pub struct Context {
     pub repositories: RepositoriesModule,
+    pub loaders: Loaders,
 }
 
 impl Context {
