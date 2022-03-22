@@ -32,11 +32,18 @@ mod servant;
 use servant::{Servant, ServantInput};
 
 pub struct Context {
-    pub repositories: RepositoriesModule,
+    repositories: RepositoriesModule,
     pub loaders: Loaders,
 }
 
 impl Context {
+    pub fn new(repositories: &RepositoriesModule) -> Self {
+        Self {
+            repositories: repositories.clone(),
+            loaders: Loaders::new(repositories),
+        }
+    }
+
     pub fn servant_repository(&self) -> Repository<ServantModel> {
         self.repositories.servant_repository()
     }
