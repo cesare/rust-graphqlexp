@@ -21,15 +21,9 @@ pub struct RepositoriesModule {
 }
 
 impl RepositoriesModule {
-    pub fn new(db: Database) -> Self {
-        Self {
-            database: db,
-        }
-    }
-
     pub async fn create(config: &dyn RepositoriesModuleConfig) -> Result<Self> {
         let database = Database::create(config).await?;
-        Ok(Self::new(database))
+        Ok(Self { database })
     }
 
     pub fn servant_repository(&self) -> Repository<Servant> {
