@@ -11,7 +11,7 @@ actix-rt = "2.6.0"
 actix-web = "4.0.1"
 anyhow = "1.0.52"
 async-trait = "0.1.52"
-dataloader = { version = "0.14", default-features = false, features = ["runtime-tokio"]}
+dataloader = { version = "0.15", default-features = false, features = ["runtime-tokio"]}
 juniper = "0.15.7"
 juniper_actix = "0.4.0"
 serde = "1.0.133"

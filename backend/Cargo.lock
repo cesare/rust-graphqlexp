@@ -620,9 +620,9 @@ dependencies = [
 
 [[package]]
 name = "dataloader"
-version = "0.14.0"
+version = "0.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "730c46307af66e10aa278fa92d6a5591b976a4859f8463329c77be3982e6ab4f"
+checksum = "9aa4240e00a8a3341eaffbb37780ac1450040c8dc72c78b7616ec5f12c91faf7"
 dependencies = [
  "async-trait",
  "tokio",
