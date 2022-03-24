@@ -35,13 +35,10 @@ impl Servant {
     }
 
     async fn profiles(&self, context: &Context) -> FieldResult<Vec<Profile>> {
-        let keys = vec![self.model.id.clone()];
-
-        let mut profile_map = context.loaders.servant_profiles_loader
-            .try_load_many(keys)
+        let results = context.loaders.servant_profiles_loader
+            .try_load(self.model.id.clone())
             .await?;
-        let profiles = profile_map.remove(&self.model.id).unwrap()
-            .into_iter()
+        let profiles = results.into_iter()
             .map(|profile| profile.into())
             .collect();
         Ok(profiles)
