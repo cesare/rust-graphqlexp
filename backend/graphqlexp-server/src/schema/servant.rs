@@ -38,8 +38,8 @@ impl Servant {
         let keys = vec![self.model.id.clone()];
 
         let mut profile_map = context.loaders.servant_profiles_loader
-            .load_many(keys)
-            .await;
+            .try_load_many(keys)
+            .await?;
         let profiles = profile_map.remove(&self.model.id).unwrap()
             .into_iter()
             .map(|profile| profile.into())
