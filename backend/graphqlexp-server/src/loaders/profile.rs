@@ -21,6 +21,30 @@ use graphqlexp_app::{
 
 type ProfileMap = HashMap<ServantId, Vec<Profile>>;
 
+struct HasManyMap<K, T> {
+    map: HashMap<K, Vec<T>>,
+}
+
+impl<K, T> HasManyMap<K, T> where K: Clone + Eq + std::hash::Hash {
+    fn new(keys: &[K]) -> Self {
+        let mut map = HashMap::with_capacity(keys.len());
+        for key in keys {
+            map.insert(key.clone(), vec![]);
+        }
+
+        Self { map }
+    }
+
+    fn insert(&mut self, key: &K, value: T) {
+        let values = self.map.get_mut(key).unwrap();
+        values.push(value);
+    }
+
+    fn finish(self) -> HashMap<K, Vec<T>> {
+        self.map
+    }
+}
+
 pub struct ServantProfilesLoadFn {
     profile_repository: Repository<Profile>,
 }
@@ -29,45 +53,17 @@ impl ServantProfilesLoadFn {
     pub async fn load_profiles(&self, ids: &[ServantId]) -> Result<Vec<Profile>> {
         self.profile_repository.list_for_servants(ids).await
     }
-
-    fn create_servant_profiles(&self, profiles: Vec<Profile>) -> ProfileMap {
-        let mut map: ProfileMap = HashMap::new();
-        for profile in profiles {
-            let servant_id = profile.servant_id.clone();
-
-            match map.get_mut(&servant_id) {
-                Some(ps) => ps.push(profile),
-                None => {
-                    let ps: Vec<Profile> = vec![profile];
-                    map.insert(servant_id, ps);
-                }
-            }
-        }
-        map
-    }
-
-    fn complete_profile_map(&self, ids: &[ServantId], map: ProfileMap) -> ProfileMap {
-        let mut target: ProfileMap = HashMap::new();
-        for id in ids {
-            match map.get(id) {
-                Some(profiles) => {
-                    target.insert(id.to_owned(), profiles.to_vec());
-                },
-                _ => {
-                    target.insert(id.to_owned(), vec![]);
-                },
-            }
-        }
-        target
-    }
 }
 
 #[async_trait]
 impl BatchFn<ServantId, Vec<Profile>> for ServantProfilesLoadFn {
     async fn load(&mut self, keys: &[ServantId]) -> ProfileMap {
         let profiles = self.load_profiles(keys).await.unwrap();
-        let profile_map = self.create_servant_profiles(profiles);
-        self.complete_profile_map(keys, profile_map)
+        let mut map = HasManyMap::<ServantId, Profile>::new(keys);
+        for profile in profiles {
+            map.insert(&profile.servant_id, profile.clone());
+        }
+        map.finish()
     }
 }
 
