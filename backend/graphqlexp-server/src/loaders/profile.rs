@@ -19,31 +19,9 @@ use graphqlexp_app::{
     },
 };
 
+use crate::loaders::map::HasManyMap;
+
 type ProfileMap = HashMap<ServantId, Vec<Profile>>;
-
-struct HasManyMap<K, T> {
-    map: HashMap<K, Vec<T>>,
-}
-
-impl<K, T> HasManyMap<K, T> where K: Clone + Eq + std::hash::Hash {
-    fn new(keys: &[K]) -> Self {
-        let mut map = HashMap::with_capacity(keys.len());
-        for key in keys {
-            map.insert(key.clone(), vec![]);
-        }
-
-        Self { map }
-    }
-
-    fn insert(&mut self, key: &K, value: T) {
-        let values = self.map.get_mut(key).unwrap();
-        values.push(value);
-    }
-
-    fn finish(self) -> HashMap<K, Vec<T>> {
-        self.map
-    }
-}
 
 pub struct ServantProfilesLoadFn {
     profile_repository: Repository<Profile>,

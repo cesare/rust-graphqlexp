@@ -1,3 +1,4 @@
+pub mod map;
 pub mod profile;
 
 use graphqlexp_app::modules::RepositoriesModule;
