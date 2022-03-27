@@ -45,7 +45,6 @@ impl BatchFn<ServantId, Vec<Profile>> for ServantProfilesLoadFn {
     }
 }
 
-#[allow(dead_code)]
 pub type ServantProfilesLoader = Loader<ServantId, Vec<Profile>, ServantProfilesLoadFn>;
 
 pub(super) fn servant_profiles_loader(repositories: &RepositoriesModule) -> ServantProfilesLoader {
