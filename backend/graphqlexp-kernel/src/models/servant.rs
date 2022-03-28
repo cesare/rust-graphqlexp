@@ -1,7 +1,7 @@
 use std::convert::From;
 
 use chrono::{DateTime, Local};
-use super::id::Id;
+use super::id::{Id, Identifiable};
 
 mod rarity;
 pub use rarity::Rarity;
@@ -25,4 +25,10 @@ pub struct Servant {
     pub rarity: Rarity,
     pub created_at: DateTime<Local>,
     pub updated_at: DateTime<Local>,
+}
+
+impl Identifiable<Servant, i32> for Servant {
+    fn identifier(&self) -> &ServantId {
+        &self.id
+    }
 }

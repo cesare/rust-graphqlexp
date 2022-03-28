@@ -35,3 +35,7 @@ impl<T, S: PartialEq> PartialEq for Id<T, S> {
 }
 
 impl<T, S: Eq> Eq for Id<T, S> {}
+
+pub trait Identifiable<T, S> {
+    fn identifier(&self) -> &Id<T, S>;
+}

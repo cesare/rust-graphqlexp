@@ -1,5 +1,5 @@
 use super::{
-    id::Id,
+    id::{Id, Identifiable},
     servant::ServantId,
 };
 
@@ -14,4 +14,10 @@ pub struct Profile {
     pub servant_id: ServantId,
     pub position: ProfilePosition,
     pub text: String,
+}
+
+impl Identifiable<Profile, String> for Profile {
+    fn identifier(&self) -> &ProfileId {
+        &self.id
+    }
 }
