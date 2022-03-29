@@ -1,6 +1,6 @@
 use super::{
-    id::{Id, Identifiable},
-    servant::ServantId,
+    id::{BelongsTo, Id, Identifiable},
+    servant::{Servant, ServantId},
 };
 
 mod position;
@@ -19,5 +19,11 @@ pub struct Profile {
 impl Identifiable<Profile, String> for Profile {
     fn identifier(&self) -> &ProfileId {
         &self.id
+    }
+}
+
+impl BelongsTo<Servant, i32> for Profile {
+    fn parent_id(&self) -> &ServantId {
+        &self.servant_id
     }
 }

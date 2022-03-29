@@ -39,3 +39,7 @@ impl<T, S: Eq> Eq for Id<T, S> {}
 pub trait Identifiable<T, S> {
     fn identifier(&self) -> &Id<T, S>;
 }
+
+pub trait BelongsTo<T, S> {
+    fn parent_id(&self) -> &Id<T, S>;
+}
