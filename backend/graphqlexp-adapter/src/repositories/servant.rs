@@ -52,11 +52,12 @@ impl ServantRepository for Repository<Servant> {
     async fn register(&self, servant: NewServant) -> Result<Servant> {
         let pool = self.database.pool.clone();
         let statement = "
-            insert into servants (name, class_name, rarity)
-            values ($1, $2, $3)
+            insert into servants (id, name, class_name, rarity)
+            values ($1, $2, $3, $4)
             returning id, name, class_name, rarity, created_at, updated_at
         ";
         let result = query_as::<_, ServantRecord>(statement)
+            .bind(cuid::cuid()?)
             .bind(servant.name)
             .bind(servant.class.to_string())
             .bind(servant.rarity.value())
