@@ -18,8 +18,8 @@ pub(super) struct Servant {
 
 #[juniper::graphql_object(Context = Context)]
 impl Servant {
-    fn id(&self) -> i32 {
-        self.model.id.value
+    fn id(&self) -> &str {
+        &self.model.id.value
     }
 
     fn name(&self) -> &str {

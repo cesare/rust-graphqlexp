@@ -8,7 +8,7 @@ use graphqlexp_kernel::models::{
 #[derive(FromRow)]
 pub(crate) struct ProfileRecord {
     pub id: String,
-    pub servant_id: i32,
+    pub servant_id: String,
     pub position: i32,
     pub text: String,
 }

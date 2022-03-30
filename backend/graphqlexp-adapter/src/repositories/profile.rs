@@ -62,7 +62,7 @@ impl ProfileRepository for Repository<Profile> {
             from profiles
             where servant_id = any($1)
         ";
-        let raw_ids: Vec<i32> = ids.iter().map(|id| id.value).collect();
+        let raw_ids: Vec<String> = ids.iter().map(|id| id.value.to_owned()).collect();
         let results = query_as::<_, ProfileRecord>(statement)
             .bind(raw_ids)
             .fetch_all(&*pool)

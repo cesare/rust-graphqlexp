@@ -22,7 +22,7 @@ impl Identifiable<Profile, String> for Profile {
     }
 }
 
-impl BelongsTo<Servant, i32> for Profile {
+impl BelongsTo<Servant, String> for Profile {
     fn parent_id(&self) -> &ServantId {
         &self.servant_id
     }

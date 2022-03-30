@@ -12,7 +12,7 @@ use graphqlexp_adapter::{
 };
 
 pub struct ProfileAttributes {
-    pub servant_id: i32,
+    pub servant_id: String,
     pub position: i32,
     pub text: String,
 }

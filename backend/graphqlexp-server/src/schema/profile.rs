@@ -37,7 +37,7 @@ impl From<ProfileModel> for Profile {
 #[derive(GraphQLInputObject)]
 #[graphql(description = "Profile Input")]
 pub(super) struct ProfileInput {
-    servant_id: i32,
+    servant_id: String,
     position: i32,
     text: String,
 }
