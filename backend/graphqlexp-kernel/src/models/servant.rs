@@ -17,7 +17,7 @@ impl From<String> for ServantId {
     }
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Servant {
     pub id: ServantId,
     pub name: String,

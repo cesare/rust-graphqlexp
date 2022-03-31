@@ -1,7 +1,7 @@
 use std::hash::{Hash, Hasher};
 use std::marker::PhantomData;
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Id<T> {
     pub value: String,
     _marker: PhantomData<T>,
@@ -13,12 +13,6 @@ impl<T> Id<T> {
             value,
             _marker: PhantomData,
         }
-    }
-}
-
-impl<T> Clone for Id<T> {
-    fn clone(&self) -> Self {
-        Self::new(self.value.clone())
     }
 }
 

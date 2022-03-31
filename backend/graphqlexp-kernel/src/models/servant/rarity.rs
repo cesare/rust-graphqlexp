@@ -2,7 +2,7 @@ use std::ops::RangeInclusive;
 
 use anyhow::{Result, bail};
 
-#[derive(Debug, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, PartialEq, PartialOrd)]
 pub struct Rarity(i32);
 
 impl Rarity {
