@@ -19,7 +19,7 @@ impl<T> Id<T> {
 
 impl<T> From<String> for Id<T> {
     fn from(value: String) -> Self {
-        Self::new(value.to_owned())
+        Self::new(value)
     }
 }
 
