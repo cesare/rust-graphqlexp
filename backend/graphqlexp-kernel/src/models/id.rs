@@ -1,3 +1,4 @@
+use std::convert::From;
 use std::hash::{Hash, Hasher};
 use std::marker::PhantomData;
 
@@ -13,6 +14,12 @@ impl<T> Id<T> {
             value,
             _marker: PhantomData,
         }
+    }
+}
+
+impl<T> From<String> for Id<T> {
+    fn from(value: String) -> Self {
+        Self::new(value.to_owned())
     }
 }
 

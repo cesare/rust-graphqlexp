@@ -1,5 +1,3 @@
-use std::convert::From;
-
 use chrono::{DateTime, Local};
 use super::id::{Id, Identifiable};
 
@@ -10,12 +8,6 @@ mod class;
 pub use class::Class;
 
 pub type ServantId = Id<Servant>;
-
-impl From<String> for ServantId {
-    fn from(value: String) -> Self {
-        Self::new(value)
-    }
-}
 
 #[derive(Clone, Debug)]
 pub struct Servant {
