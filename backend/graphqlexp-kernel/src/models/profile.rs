@@ -6,7 +6,7 @@ use super::{
 mod position;
 pub use position::ProfilePosition;
 
-pub type ProfileId = Id<Profile, String>;
+pub type ProfileId = Id<Profile>;
 
 #[derive(Clone)]
 pub struct Profile {
@@ -16,13 +16,13 @@ pub struct Profile {
     pub text: String,
 }
 
-impl Identifiable<Profile, String> for Profile {
+impl Identifiable<Profile> for Profile {
     fn identifier(&self) -> &ProfileId {
         &self.id
     }
 }
 
-impl BelongsTo<Servant, String> for Profile {
+impl BelongsTo<Servant> for Profile {
     fn parent_id(&self) -> &ServantId {
         &self.servant_id
     }

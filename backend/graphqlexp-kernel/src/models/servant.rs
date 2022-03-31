@@ -9,7 +9,7 @@ pub use rarity::Rarity;
 mod class;
 pub use class::Class;
 
-pub type ServantId = Id<Servant, String>;
+pub type ServantId = Id<Servant>;
 
 impl From<String> for ServantId {
     fn from(value: String) -> Self {
@@ -27,7 +27,7 @@ pub struct Servant {
     pub updated_at: DateTime<Local>,
 }
 
-impl Identifiable<Servant, String> for Servant {
+impl Identifiable<Servant> for Servant {
     fn identifier(&self) -> &ServantId {
         &self.id
     }
