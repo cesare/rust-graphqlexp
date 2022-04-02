@@ -1,26 +1,38 @@
 use std::collections::HashMap;
-use std::hash::Hash;
+use std::marker::PhantomData;
 
-pub(super) struct HasManyMap<K, T> {
-    map: HashMap<K, Vec<T>>,
+use graphqlexp_app::models::{BelongsTo, Id};
+
+pub struct OneToManyMap<T, S> {
+    map: HashMap<Id<T>, Vec<S>>,
+    _marker: PhantomData<T>,
 }
 
-impl<K, T> HasManyMap<K, T> where K: Clone + Eq + Hash {
-    pub fn new(keys: &[K]) -> Self {
+impl<T, S> OneToManyMap<T, S> where T: Clone, S: BelongsTo<T> + Clone {
+    pub fn new(keys: &[Id<T>]) -> Self {
         let mut map = HashMap::with_capacity(keys.len());
-        for key in keys {
-            map.insert(key.clone(), vec![]);
+        for key in keys.to_vec() {
+            map.insert(key, vec![]);
         }
 
-        Self { map }
+        Self {
+            map: map,
+            _marker: PhantomData,
+        }
     }
 
-    pub fn insert(&mut self, key: &K, value: T) {
+    pub fn insert_all(&mut self, values: &[S]) {
+        for v in values.to_vec() {
+            self.insert(v.parent_id(), v.to_owned());
+        }
+    }
+
+    pub fn insert(&mut self, key: &Id<T>, value: S) {
         let values = self.map.get_mut(key).unwrap();
         values.push(value);
     }
 
-    pub fn finish(self) -> HashMap<K, Vec<T>> {
+    pub fn finish(self) -> HashMap<Id<T>, Vec<S>> {
         self.map
     }
 }

@@ -10,7 +10,7 @@ use dataloader::{
 use graphqlexp_app::{
     models::{
         profile::Profile,
-        servant::ServantId,
+        servant::{Servant, ServantId},
     },
     modules::RepositoriesModule,
     repositories::{
@@ -19,7 +19,7 @@ use graphqlexp_app::{
     },
 };
 
-use crate::loaders::map::HasManyMap;
+use crate::loaders::map::OneToManyMap;
 
 type ProfileMap = HashMap<ServantId, Vec<Profile>>;
 
@@ -37,10 +37,8 @@ impl ServantProfilesLoadFn {
 impl BatchFn<ServantId, Vec<Profile>> for ServantProfilesLoadFn {
     async fn load(&mut self, keys: &[ServantId]) -> ProfileMap {
         let profiles = self.load_profiles(keys).await.unwrap();
-        let mut map = HasManyMap::<ServantId, Profile>::new(keys);
-        for profile in profiles {
-            map.insert(&profile.servant_id, profile.clone());
-        }
+        let mut map = OneToManyMap::<Servant, Profile>::new(keys);
+        map.insert_all(&profiles);
         map.finish()
     }
 }
