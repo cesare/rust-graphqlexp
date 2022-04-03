@@ -1,14 +1,14 @@
 use std::collections::HashMap;
 use std::marker::PhantomData;
 
-use graphqlexp_app::models::{BelongsTo, Id};
+use graphqlexp_app::models::{BelongsTo, Id, Identifiable};
 
 pub struct OneToManyMap<T, S> {
     map: HashMap<Id<T>, Vec<S>>,
     _marker: PhantomData<T>,
 }
 
-impl<T, S> OneToManyMap<T, S> where T: Clone, S: BelongsTo<T> + Clone {
+impl<T, S> OneToManyMap<T, S> where T: Identifiable<T> + Clone, S: BelongsTo<T> + Clone {
     pub fn new(keys: &[Id<T>]) -> Self {
         let mut map = HashMap::with_capacity(keys.len());
         for key in keys.to_vec() {
