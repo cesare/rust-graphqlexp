@@ -11,7 +11,7 @@ use graphqlexp_server::{
     config::{GraphqlexpConfig},
     logger::{initialize_logger, default_logger},
     routes::configure_routes,
-    schema::create_schema,
+    schema::root::create_schema,
 };
 
 #[derive(StructOpt)]
