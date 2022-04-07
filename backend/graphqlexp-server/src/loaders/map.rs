@@ -23,7 +23,8 @@ impl<T, S> OneToManyMap<T, S> where T: Identifiable<T> + Clone, S: BelongsTo<T> 
 
     pub fn insert_all(&mut self, values: &[S]) {
         for v in values.to_vec() {
-            self.insert(v.parent_id(), v.to_owned());
+            let key = v.parent_id().to_owned();
+            self.insert(&key, v);
         }
     }
 
