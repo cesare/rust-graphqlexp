@@ -1,5 +1,6 @@
 import { ApolloClient, InMemoryCache, gql} from "@apollo/client";
 import { GetServerSideProps } from "next";
+import Link from "next/link"
 
 const client = new ApolloClient({
   uri: "http://127.0.0.1:8000/graphql",
@@ -20,7 +21,12 @@ type Props = {
 export default function ServantsIndex(props: Props) {
   return <>
     {props.servants.map(servant => (
-      <div key={servant.id}>{servant.name} [{servant.className}]</div>
+      <div key={servant.id}>
+        <Link href={{pathname: "/servants/[id]", query: {id: servant.id}}}>
+          {servant.name}
+        </Link>
+        [{servant.className}]
+      </div>
     ))}
   </>
 }
