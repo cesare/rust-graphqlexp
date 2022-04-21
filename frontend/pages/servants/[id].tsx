@@ -1,8 +1,9 @@
 import { ApolloClient, InMemoryCache, gql} from "@apollo/client"
 import { GetServerSideProps } from "next"
 
+const baseUri = process.env.BACKEND_BASE_URI || "http://127.0.0.1:8000";
 const client = new ApolloClient({
-  uri: "http://127.0.0.1:8000/graphql",
+  uri: `${baseUri}/graphql`,
   cache: new InMemoryCache(),
 });
 
