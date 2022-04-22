@@ -1,11 +1,8 @@
-import { ApolloClient, InMemoryCache, gql} from "@apollo/client";
-import { GetServerSideProps } from "next";
+import { gql } from "@apollo/client"
+import { GetServerSideProps } from "next"
 import Link from "next/link"
 
-const client = new ApolloClient({
-  uri: "http://127.0.0.1:8000/graphql",
-  cache: new InMemoryCache(),
-});
+import client from "../../src/backend/client"
 
 type Servant = {
   id: string,
