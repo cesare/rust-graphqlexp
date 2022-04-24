@@ -12,6 +12,7 @@ type Servant = {
 };
 
 type Profile = {
+  id: String,
   text: String,
 }
 
@@ -25,7 +26,7 @@ export default function ShowServant(props: Props) {
       <p>{props.servant.name}</p>
       <ul>
         {props.servant.profiles.map(profile => (
-          <li>{profile.text}</li>
+          <li key={profile.id}>{profile.text}</li>
         ))}
       </ul>
     </div>
@@ -40,7 +41,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       query fetchServant($servantId: String!) {
         servant(id: $servantId) {
           id name className rarity
-          profiles { text }
+          profiles { id text }
         }
       }
     `,
