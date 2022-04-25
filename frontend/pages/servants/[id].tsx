@@ -12,8 +12,8 @@ type Servant = {
 };
 
 type Profile = {
-  id: String,
-  text: String,
+  id: string,
+  text: string
 }
 
 type Props = {
