@@ -16,7 +16,7 @@ impl<T, S> OneToManyMap<T, S> where T: Identifiable<T> + Clone, S: BelongsTo<T> 
         }
 
         Self {
-            map: map,
+            map,
             _marker: PhantomData,
         }
     }
