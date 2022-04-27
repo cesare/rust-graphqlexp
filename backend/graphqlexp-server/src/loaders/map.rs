@@ -11,7 +11,7 @@ pub struct OneToManyMap<T, S> {
 impl<T, S> OneToManyMap<T, S> where T: Identifiable<T> + Clone, S: BelongsTo<T> + Clone {
     pub fn new(keys: &[Id<T>]) -> Self {
         let mut map = HashMap::with_capacity(keys.len());
-        for key in keys.to_vec() {
+        for key in keys.iter().cloned() {
             map.insert(key, vec![]);
         }
 
@@ -22,7 +22,7 @@ impl<T, S> OneToManyMap<T, S> where T: Identifiable<T> + Clone, S: BelongsTo<T> 
     }
 
     pub fn insert_all(&mut self, values: &[S]) {
-        for v in values.to_vec() {
+        for v in values.iter().cloned() {
             let key = v.parent_id().to_owned();
             self.insert(&key, v);
         }
