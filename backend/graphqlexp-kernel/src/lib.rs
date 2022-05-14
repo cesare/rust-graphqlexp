@@ -8,5 +8,8 @@ pub enum Error {
     UnknownClass(String),
 
     #[error("invalid rarity {0}")]
-    InvalidRarity(i32)
+    InvalidRarity(i32),
+
+    #[error("invalid position {0}")]
+    InvalidPosition(i32),
 }

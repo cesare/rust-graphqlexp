@@ -1,4 +1,6 @@
-use anyhow::{Result, bail};
+use crate::Error;
+
+type Result<T> = std::result::Result<T, Error>;
 
 #[derive(Clone, Debug, PartialEq, PartialOrd)]
 pub struct ProfilePosition(i32);
@@ -6,7 +8,7 @@ pub struct ProfilePosition(i32);
 impl ProfilePosition {
     pub fn create(value: i32) -> Result<Self> {
         if value < 1 {
-            bail!("invalid profile position: {}", value);
+            return Err(Error::InvalidPosition(value))
         }
         Ok(Self(value))
     }
