@@ -1,4 +1,3 @@
-use anyhow::Result;
 use async_trait::async_trait;
 use sqlx::query_as;
 
@@ -10,6 +9,8 @@ pub use graphqlexp_kernel::{
 };
 use super::Repository;
 use crate::records::servant::ServantRecord;
+
+type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 #[async_trait]
 impl ServantRepository for Repository<Servant> {

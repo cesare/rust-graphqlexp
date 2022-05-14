@@ -1,9 +1,10 @@
-use anyhow::Result;
 use async_trait::async_trait;
 
 use crate::models::{
     servant::{Class, Rarity, Servant, ServantId}
 };
+
+type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 pub struct NewServant {
     pub name: String,

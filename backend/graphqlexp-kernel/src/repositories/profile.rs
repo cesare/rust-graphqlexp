@@ -1,10 +1,11 @@
-use anyhow::Result;
 use async_trait::async_trait;
 
 use crate::models::{
     profile::{Profile, ProfileId, ProfilePosition},
     servant::ServantId,
 };
+
+type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 pub struct NewProfile {
     pub servant_id: ServantId,

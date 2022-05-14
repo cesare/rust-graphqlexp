@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 
-use anyhow::Result;
 use async_trait::async_trait;
 use dataloader::{
     BatchFn,
@@ -22,6 +21,7 @@ use graphqlexp_app::{
 use crate::loaders::map::OneToManyMap;
 
 type ProfileMap = HashMap<ServantId, Vec<Profile>>;
+type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 pub struct ServantProfilesLoadFn {
     profile_repository: Repository<Profile>,

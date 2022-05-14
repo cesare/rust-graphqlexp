@@ -1,7 +1,5 @@
 use std::sync::Arc;
 
-use anyhow::Result;
-
 use graphqlexp_adapter::{
     models::{
         profile::{Profile, ProfilePosition},
@@ -10,6 +8,8 @@ use graphqlexp_adapter::{
     modules::RepositoriesModule,
     repositories::profile::{NewProfile, ProfileRepository},
 };
+
+type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 pub struct ProfileAttributes {
     pub servant_id: String,

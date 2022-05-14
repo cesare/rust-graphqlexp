@@ -1,13 +1,13 @@
 use std::str::FromStr;
 use std::sync::Arc;
 
-use anyhow::Result;
-
 use graphqlexp_adapter::{
     models::servant::{Class, Rarity, Servant},
     modules::RepositoriesModule,
     repositories::servant::{NewServant, ServantRepository},
 };
+
+type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 pub struct ServantRegistration {
     pub name: String,
