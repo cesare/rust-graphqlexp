@@ -1,7 +1,7 @@
 use std::str::FromStr;
 use std::string::ToString;
 
-use anyhow::anyhow;
+use crate::Error;
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum Class {
@@ -21,7 +21,7 @@ pub enum Class {
 }
 
 impl FromStr for Class {
-    type Err = anyhow::Error;
+    type Err = Error;
 
     fn from_str(class_name: &str) -> Result<Self, Self::Err> {
         match class_name {
@@ -38,7 +38,7 @@ impl FromStr for Class {
             "alterego" => Ok(Self::Alterego),
             "pretender" => Ok(Self::Pretender),
             "foreigner" => Ok(Self::Foreigner),
-            _ => Err(anyhow!("Unknown servant class name: {}", class_name)),
+            _ => Err(Error::UnknownClass(class_name.to_owned())),
         }
     }
 }
