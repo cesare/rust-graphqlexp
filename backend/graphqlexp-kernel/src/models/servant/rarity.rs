@@ -1,6 +1,8 @@
 use std::ops::RangeInclusive;
 
-use anyhow::{Result, bail};
+use crate::Error;
+
+type Result<T> = std::result::Result<T, Error>;
 
 #[derive(Clone, Debug, PartialEq, PartialOrd)]
 pub struct Rarity(i32);
@@ -10,7 +12,7 @@ impl Rarity {
 
     pub fn create(value: i32) -> Result<Self> {
         if ! Self::RARITY_RANGE.contains(&value) {
-            bail!("Invalid rarity value: {}", value);
+            return Err(Error::InvalidRarity(value))
         }
         Ok(Self(value))
     }
