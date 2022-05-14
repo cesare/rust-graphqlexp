@@ -906,6 +906,7 @@ dependencies = [
  "anyhow",
  "async-trait",
  "chrono",
+ "thiserror",
 ]
 
 [[package]]
