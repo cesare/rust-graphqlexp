@@ -1,7 +1,6 @@
 use std::path::PathBuf;
 
 use actix_web::{App, HttpServer, web};
-use anyhow::Result;
 use structopt::StructOpt;
 
 use graphqlexp_app::{
@@ -13,6 +12,8 @@ use graphqlexp_server::{
     routes::configure_routes,
     schema::root::create_schema,
 };
+
+type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 #[derive(StructOpt)]
 #[structopt(name = "graphqlexp")]

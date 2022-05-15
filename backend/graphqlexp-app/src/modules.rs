@@ -1,10 +1,10 @@
 use std::sync::Arc;
 
-use anyhow::Result;
-
 pub use graphqlexp_adapter::modules::RepositoriesModuleConfig;
 pub use graphqlexp_adapter::modules::RepositoriesModule;
 use crate::usecase::{ProfileRegistration, RegisterServant};
+
+type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 #[derive(Clone)]
 pub struct UsecasesModule {

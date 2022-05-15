@@ -888,6 +888,7 @@ dependencies = [
  "cuid",
  "graphqlexp-kernel",
  "sqlx",
+ "thiserror",
  "tokio",
 ]
 

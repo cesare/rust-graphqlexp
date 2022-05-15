@@ -12,4 +12,5 @@ chrono = "0.4.19"
 cuid = "1.2.0"
 graphqlexp-kernel = { path = "../graphqlexp-kernel" }
 sqlx = { version = "0.5", features = ["chrono", "postgres", "runtime-tokio-rustls"] }
+thiserror = "1.0.31"
 tokio = { version = "1.15.0", features = ["rt", "macros"] }

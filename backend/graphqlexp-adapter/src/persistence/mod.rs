@@ -1,9 +1,10 @@
 use std::sync::Arc;
 
-use anyhow::Result;
 use sqlx::postgres::{PgPool, PgPoolOptions};
 
 use super::modules::RepositoriesModuleConfig;
+
+type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 #[derive(Clone)]
 pub struct Database {

@@ -1,5 +1,3 @@
-use anyhow::Result;
-
 use graphqlexp_kernel::{
     models::{
         profile::Profile,
@@ -10,6 +8,8 @@ use crate::{
     persistence::Database,
     repositories::Repository,
 };
+
+type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 pub trait RepositoriesModuleConfig {
     fn database_url(&self) -> String;
