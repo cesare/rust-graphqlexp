@@ -14,7 +14,7 @@ pub(crate) struct ProfileRecord {
 }
 
 impl TryFrom<ProfileRecord> for Profile {
-    type Error = anyhow::Error;
+    type Error = crate::Error;
 
     fn try_from(record: ProfileRecord) -> Result<Self, Self::Error> {
         let profile = Self {

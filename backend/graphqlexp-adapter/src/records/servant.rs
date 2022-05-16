@@ -16,7 +16,7 @@ pub struct ServantRecord {
 }
 
 impl TryFrom<ServantRecord> for Servant {
-    type Error = anyhow::Error;
+    type Error = crate::Error;
 
     fn try_from(record: ServantRecord) -> Result<Self, Self::Error> {
         let servant = Self {
