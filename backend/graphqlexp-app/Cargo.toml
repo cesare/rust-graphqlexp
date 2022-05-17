@@ -7,4 +7,3 @@ edition = "2021"
 
 [dependencies]
 graphqlexp-adapter = { path = "../graphqlexp-adapter" }
-anyhow = "1.0.52"
