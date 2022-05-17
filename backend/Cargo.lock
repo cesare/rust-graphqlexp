@@ -919,10 +919,12 @@ dependencies = [
  "graphqlexp-app",
  "juniper",
  "juniper_actix",
+ "log",
  "serde",
  "serde_json",
  "simplelog",
  "structopt",
+ "thiserror",
  "tokio",
  "toml",
 ]

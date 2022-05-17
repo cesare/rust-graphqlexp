@@ -1,11 +1,20 @@
 use std::path::Path;
 
-use anyhow::Result;
 use serde::Deserialize;
+use thiserror::Error;
 use tokio::fs::File;
 use tokio::io::AsyncReadExt;
 
 use graphqlexp_app::modules::RepositoriesModuleConfig;
+
+#[derive(Debug, Error)]
+pub enum GraphqlexpConfigError {
+    #[error(transparent)]
+    IoError(#[from] std::io::Error),
+
+    #[error(transparent)]
+    TomlError(#[from] toml::de::Error),
+}
 
 #[derive(Deserialize)]
 pub struct GraphqlexpConfig {
@@ -14,7 +23,7 @@ pub struct GraphqlexpConfig {
 }
 
 impl GraphqlexpConfig {
-    pub async fn load(path: &Path) -> Result<Self> {
+    pub async fn load(path: &Path) -> Result<Self, GraphqlexpConfigError> {
         let mut file = File::open(path).await?;
         let mut content = String::new();
         file.read_to_string(&mut content).await?;

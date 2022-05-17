@@ -14,9 +14,11 @@ async-trait = "0.1.52"
 dataloader = { version = "0.15", default-features = false, features = ["runtime-tokio"]}
 juniper = "0.15.7"
 juniper_actix = "0.4.0"
+log = "0.4.17"
 serde = "1.0.133"
 serde_json = "1.0.78"
 simplelog = "0.11.2"
 structopt = "0.3.26"
+thiserror = "1.0.31"
 tokio = { version = "1.15.0", features = ["fs", "macros", "rt-multi-thread"] }
 toml = "0.5.8"

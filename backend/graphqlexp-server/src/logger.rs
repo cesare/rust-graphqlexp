@@ -1,8 +1,9 @@
 use actix_web::middleware::Logger;
-use anyhow::Result;
 use simplelog::{Config, LevelFilter, SimpleLogger};
 
-pub fn initialize_logger() -> Result<()> {
+use crate::GraphqlexpError;
+
+pub fn initialize_logger() -> Result<(), GraphqlexpError> {
     SimpleLogger::init(LevelFilter::Debug, Config::default())?;
     Ok(())
 }
