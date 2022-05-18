@@ -5,7 +5,6 @@ use actix_web::{
         post, resource,
     }
 };
-use anyhow::Result;
 use juniper::http::GraphQLRequest;
 
 use graphqlexp_app::modules::RepositoriesModule;
