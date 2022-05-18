@@ -21,9 +21,9 @@ async fn graphql(repositories: Data<RepositoriesModule>, schema: Data<Schema>, d
     let context = Context::new(repositories.as_ref());
 
     let res = data.execute(&schema, &context).await;
-    let servant = serde_json::to_string(&res)?;
+    let response_body = serde_json::to_string(&res)?;
 
     Ok(HttpResponse::Ok()
         .content_type("application/json")
-        .body(servant))
+        .body(response_body))
 }
