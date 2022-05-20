@@ -12,12 +12,13 @@ pub use graphqlexp_kernel::{
 };
 use super::Repository;
 use crate::records::profile::ProfileRecord;
-
-type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
+use crate::Error;
 
 #[async_trait]
 impl ProfileRepository for Repository<Profile> {
-    async fn find(&self, id: &ProfileId) -> Result<Option<Profile>> {
+    type Error = Error;
+
+    async fn find(&self, id: &ProfileId) -> Result<Option<Profile>, Error> {
         let pool = self.database.pool.clone();
         let statement = "
             select id, servant_id, position, text
@@ -35,7 +36,7 @@ impl ProfileRepository for Repository<Profile> {
         }
     }
 
-    async fn list_for_servant(&self, servant_id: &ServantId) -> Result<Vec<Profile>> {
+    async fn list_for_servant(&self, servant_id: &ServantId) -> Result<Vec<Profile>, Error> {
         let pool = self.database.pool.clone();
         let statement = "
             select id, servant_id, position, text
@@ -56,7 +57,7 @@ impl ProfileRepository for Repository<Profile> {
         Ok(profiles)
     }
 
-    async fn list_for_servants(&self, ids: &[ServantId]) -> Result<Vec<Profile>> {
+    async fn list_for_servants(&self, ids: &[ServantId]) -> Result<Vec<Profile>, Error> {
         let pool = self.database.pool.clone();
         let statement = "
             select id, servant_id, position, text
@@ -77,7 +78,7 @@ impl ProfileRepository for Repository<Profile> {
         Ok(profiles)
     }
 
-    async fn register(&self, profile: NewProfile) -> Result<Profile> {
+    async fn register(&self, profile: NewProfile) -> Result<Profile, Error> {
         let pool = self.database.pool.clone();
         let statement = "
             insert into profiles (id, servant_id, position, text)

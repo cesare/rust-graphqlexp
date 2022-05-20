@@ -16,19 +16,19 @@ use graphqlexp_app::{
         profile::ProfileRepository,
         Repository,
     },
+    AdapterError,
 };
 
 use crate::loaders::map::OneToManyMap;
 
 type ProfileMap = HashMap<ServantId, Vec<Profile>>;
-type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 pub struct ServantProfilesLoadFn {
     profile_repository: Repository<Profile>,
 }
 
 impl ServantProfilesLoadFn {
-    pub async fn load_profiles(&self, ids: &[ServantId]) -> Result<Vec<Profile>> {
+    pub async fn load_profiles(&self, ids: &[ServantId]) -> Result<Vec<Profile>, AdapterError> {
         self.profile_repository.list_for_servants(ids).await
     }
 }
