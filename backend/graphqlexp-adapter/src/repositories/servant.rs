@@ -9,12 +9,13 @@ pub use graphqlexp_kernel::{
 };
 use super::Repository;
 use crate::records::servant::ServantRecord;
-
-type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
+use crate::Error;
 
 #[async_trait]
 impl ServantRepository for Repository<Servant> {
-    async fn find(&self, id: ServantId) -> Result<Option<Servant>> {
+    type Error = Error;
+
+    async fn find(&self, id: ServantId) -> Result<Option<Servant>, Error> {
         let pool = self.database.pool.clone();
         let statement = "
             select id, name, class_name, rarity, created_at, updated_at
@@ -32,7 +33,7 @@ impl ServantRepository for Repository<Servant> {
         }
     }
 
-    async fn list(&self) -> Result<Vec<Servant>> {
+    async fn list(&self) -> Result<Vec<Servant>, Error> {
         let pool = self.database.pool.clone();
         let statement = "
             select id, name, class_name, rarity, created_at, updated_at
@@ -50,7 +51,7 @@ impl ServantRepository for Repository<Servant> {
         Ok(servants)
     }
 
-    async fn register(&self, servant: NewServant) -> Result<Servant> {
+    async fn register(&self, servant: NewServant) -> Result<Servant, Error> {
         let pool = self.database.pool.clone();
         let statement = "
             insert into servants (id, name, class_name, rarity)

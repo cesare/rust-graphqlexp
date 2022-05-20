@@ -4,8 +4,6 @@ use crate::models::{
     servant::{Class, Rarity, Servant, ServantId}
 };
 
-type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
-
 pub struct NewServant {
     pub name: String,
     pub class: Class,
@@ -14,7 +12,9 @@ pub struct NewServant {
 
 #[async_trait]
 pub trait ServantRepository {
-    async fn find(&self, id: ServantId) -> Result<Option<Servant>>;
-    async fn list(&self) -> Result<Vec<Servant>>;
-    async fn register(&self, servant: NewServant) -> Result<Servant>;
+    type Error: std::error::Error;
+
+    async fn find(&self, id: ServantId) -> Result<Option<Servant>, Self::Error>;
+    async fn list(&self) -> Result<Vec<Servant>, Self::Error>;
+    async fn register(&self, servant: NewServant) -> Result<Servant, Self::Error>;
 }
