@@ -2,15 +2,13 @@ use std::ops::RangeInclusive;
 
 use crate::Error;
 
-type Result<T> = std::result::Result<T, Error>;
-
 #[derive(Clone, Debug, PartialEq, PartialOrd)]
 pub struct Rarity(i32);
 
 impl Rarity {
     const RARITY_RANGE: RangeInclusive<i32> = 0..=5;
 
-    pub fn create(value: i32) -> Result<Self> {
+    pub fn create(value: i32) -> Result<Self, Error> {
         if ! Self::RARITY_RANGE.contains(&value) {
             return Err(Error::InvalidRarity(value))
         }

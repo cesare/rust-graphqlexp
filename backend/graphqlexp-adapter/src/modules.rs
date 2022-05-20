@@ -7,9 +7,8 @@ use graphqlexp_kernel::{
 use crate::{
     persistence::Database,
     repositories::Repository,
+    Error,
 };
-
-type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 pub trait RepositoriesModuleConfig {
     fn database_url(&self) -> String;
@@ -21,7 +20,7 @@ pub struct RepositoriesModule {
 }
 
 impl RepositoriesModule {
-    pub async fn create(config: &dyn RepositoriesModuleConfig) -> Result<Self> {
+    pub async fn create(config: &dyn RepositoriesModuleConfig) -> Result<Self, Error> {
         let database = Database::create(config).await?;
         Ok(Self { database })
     }

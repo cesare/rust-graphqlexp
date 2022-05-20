@@ -1,12 +1,10 @@
 use crate::Error;
 
-type Result<T> = std::result::Result<T, Error>;
-
 #[derive(Clone, Debug, PartialEq, PartialOrd)]
 pub struct ProfilePosition(i32);
 
 impl ProfilePosition {
-    pub fn create(value: i32) -> Result<Self> {
+    pub fn create(value: i32) -> Result<Self, Error> {
         if value < 1 {
             return Err(Error::InvalidPosition(value))
         }
