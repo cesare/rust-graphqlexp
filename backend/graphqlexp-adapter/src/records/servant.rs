@@ -1,5 +1,3 @@
-use std::str::FromStr;
-
 use chrono::{DateTime, Local};
 use sqlx::FromRow;
 
@@ -22,7 +20,7 @@ impl TryFrom<ServantRecord> for Servant {
         let servant = Self {
             id: ServantId::new(record.id),
             name: record.name,
-            class: Class::from_str(&record.class_name)?,
+            class: Class::from(record.class_name.as_str()),
             rarity: Rarity::create(record.rarity)?,
             created_at: record.created_at,
             updated_at: record.updated_at,

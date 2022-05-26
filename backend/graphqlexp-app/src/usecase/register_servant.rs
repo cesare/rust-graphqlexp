@@ -1,4 +1,3 @@
-use std::str::FromStr;
 use std::sync::Arc;
 
 use graphqlexp_adapter::{
@@ -30,7 +29,7 @@ impl RegisterServant {
         let repository = self.repositories.servant_repository();
         let new_servant = NewServant {
             name: registration.name,
-            class: Class::from_str(&registration.class_name)?,
+            class: Class::from(registration.class_name.as_str()),
             rarity: Rarity::create(registration.rarity)?,
         };
         let result = repository.register(new_servant).await?;

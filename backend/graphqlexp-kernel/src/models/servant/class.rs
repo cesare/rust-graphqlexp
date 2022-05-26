@@ -1,7 +1,4 @@
-use std::str::FromStr;
 use std::string::ToString;
-
-use crate::Error;
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum Class {
@@ -20,25 +17,23 @@ pub enum Class {
     Foreigner,
 }
 
-impl FromStr for Class {
-    type Err = Error;
-
-    fn from_str(class_name: &str) -> Result<Self, Self::Err> {
+impl From<&str> for Class {
+    fn from(class_name: &str) -> Self {
         match class_name {
-            "saber" => Ok(Self::Saber),
-            "archer" => Ok(Self::Archer),
-            "lancer" => Ok(Self::Lancer),
-            "rider" => Ok(Self::Rider),
-            "caster" => Ok(Self::Caster),
-            "assassin" => Ok(Self::Assassin),
-            "berserker" => Ok(Self::Berserker),
-            "ruler" => Ok(Self::Ruler),
-            "avenger" => Ok(Self::Avenger),
-            "mooncancer" => Ok(Self::Mooncancer),
-            "alterego" => Ok(Self::Alterego),
-            "pretender" => Ok(Self::Pretender),
-            "foreigner" => Ok(Self::Foreigner),
-            _ => Err(Error::UnknownClass(class_name.to_owned())),
+            "saber"      => Self::Saber,
+            "archer"     => Self::Archer,
+            "lancer"     => Self::Lancer,
+            "rider"      => Self::Rider,
+            "caster"     => Self::Caster,
+            "assassin"   => Self::Assassin,
+            "berserker"  => Self::Berserker,
+            "ruler"      => Self::Ruler,
+            "avenger"    => Self::Avenger,
+            "mooncancer" => Self::Mooncancer,
+            "alterego"   => Self::Alterego,
+            "pretender"  => Self::Pretender,
+            "foreigner"  => Self::Foreigner,
+            _ => panic!("Unknown class name: {}", class_name)
         }
     }
 }
@@ -66,8 +61,6 @@ impl ToString for Class {
 
 #[cfg(test)]
 mod tests {
-    use std::str::FromStr;
-
     use super::Class;
 
     #[test]
@@ -78,18 +71,17 @@ mod tests {
 
     #[test]
     fn valid_string_to_class() {
-        let saber = Class::from_str("saber");
-        assert!(saber.is_ok());
-        assert_eq!(Class::Saber, saber.unwrap());
+        let saber = Class::from("saber");
+        assert_eq!(Class::Saber, saber);
 
-        let foreigner = Class::from_str("foreigner");
-        assert!(foreigner.is_ok());
-        assert_eq!(Class::Foreigner, foreigner.unwrap());
+        let foreigner = Class::from("foreigner");
+        assert_eq!(Class::Foreigner, foreigner);
     }
 
     #[test]
+    #[should_panic]
     fn invalid_string_to_class() {
-        assert!(Class::from_str("faker").is_err());
+        let _ = Class::from("faker");
     }
 
     #[test]
