@@ -11,7 +11,4 @@ pub enum Error {
 
     #[error("failed to generate cuid")]
     CuidFailure(#[from] cuid::CuidError),
-
-    #[error(transparent)]
-    KernelError(#[from] graphqlexp_kernel::Error),
 }
