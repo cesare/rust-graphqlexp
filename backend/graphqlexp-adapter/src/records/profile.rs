@@ -13,16 +13,13 @@ pub(crate) struct ProfileRecord {
     pub text: String,
 }
 
-impl TryFrom<ProfileRecord> for Profile {
-    type Error = crate::Error;
-
-    fn try_from(record: ProfileRecord) -> Result<Self, Self::Error> {
-        let profile = Self {
+impl From<ProfileRecord> for Profile {
+    fn from(record: ProfileRecord) -> Self {
+        Self {
             id: ProfileId::new(record.id),
             servant_id: ServantId::new(record.servant_id),
-            position: ProfilePosition::create(record.position)?,
+            position: ProfilePosition::new(record.position),
             text: record.text,
-        };
-        Ok(profile)
+        }
     }
 }

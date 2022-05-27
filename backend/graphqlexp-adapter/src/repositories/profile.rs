@@ -31,7 +31,7 @@ impl ProfileRepository for Repository<Profile> {
             .fetch_optional(&*pool)
             .await?;
         match result {
-            Some(record) => Ok(Some(record.try_into()?)),
+            Some(record) => Ok(Some(record.into())),
             _ => Ok(None),
         }
     }
@@ -51,7 +51,7 @@ impl ProfileRepository for Repository<Profile> {
 
         let mut profiles: Vec<Profile> = vec![];
         for record in results {
-            let profile = record.try_into()?;
+            let profile = record.into();
             profiles.push(profile);
         }
         Ok(profiles)
@@ -72,7 +72,7 @@ impl ProfileRepository for Repository<Profile> {
 
         let mut profiles: Vec<Profile> = vec![];
         for record in results {
-            let profile = record.try_into()?;
+            let profile = record.into();
             profiles.push(profile);
         }
         Ok(profiles)
@@ -93,7 +93,7 @@ impl ProfileRepository for Repository<Profile> {
             .fetch_one(&*pool)
             .await?;
 
-        let profile = result.try_into()?;
+        let profile = result.into();
         Ok(profile)
     }
 }

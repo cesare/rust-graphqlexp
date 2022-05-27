@@ -32,7 +32,7 @@ impl ProfileRegistration {
         let repository = self.repositories.profile_repository();
         let new_profile = NewProfile {
             servant_id: ServantId::new(attrs.servant_id),
-            position: ProfilePosition::create(attrs.position)?,
+            position: ProfilePosition::new(attrs.position),
             text: attrs.text,
         };
         let profile = repository.register(new_profile).await?;

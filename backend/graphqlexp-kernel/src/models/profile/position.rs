@@ -1,14 +1,12 @@
-use crate::Error;
-
 #[derive(Clone, Debug, PartialEq, PartialOrd)]
 pub struct ProfilePosition(i32);
 
 impl ProfilePosition {
-    pub fn create(value: i32) -> Result<Self, Error> {
+    pub fn new(value: i32) -> Self {
         if value < 1 {
-            return Err(Error::InvalidPosition(value))
+            panic!("Invalid profile position value: {}", value);
         }
-        Ok(Self(value))
+        Self(value)
     }
 
     pub fn value(&self) -> i32 {
@@ -22,25 +20,23 @@ mod tests {
 
     #[test]
     fn creation_with_valid_values() {
-        let position_1 = ProfilePosition::create(1);
-        assert!(position_1.is_ok());
-        assert_eq!(ProfilePosition(1), position_1.unwrap());
+        let position_1 = ProfilePosition::new(1);
+        assert_eq!(ProfilePosition(1), position_1);
 
-        let position_123 = ProfilePosition::create(123);
-        assert!(position_123.is_ok());
-        assert_eq!(ProfilePosition(123), position_123.unwrap());
+        let position_123 = ProfilePosition::new(123);
+        assert_eq!(ProfilePosition(123), position_123);
     }
 
     #[test]
+    #[should_panic]
     fn creation_with_zero() {
-        let position = ProfilePosition::create(0);
-        assert!(position.is_err());
+        let _position = ProfilePosition::new(0);
     }
 
     #[test]
+    #[should_panic]
     fn creation_with_negative_values() {
-        let position = ProfilePosition::create(-1);
-        assert!(position.is_err());
+        let _position = ProfilePosition::new(-1);
     }
 
     #[test]
