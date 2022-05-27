@@ -13,18 +13,15 @@ pub struct ServantRecord {
     pub updated_at: DateTime<Local>,
 }
 
-impl TryFrom<ServantRecord> for Servant {
-    type Error = crate::Error;
-
-    fn try_from(record: ServantRecord) -> Result<Self, Self::Error> {
-        let servant = Self {
+impl From<ServantRecord> for Servant {
+    fn from(record: ServantRecord) -> Self {
+        Self {
             id: ServantId::new(record.id),
             name: record.name,
             class: Class::from(record.class_name.as_str()),
-            rarity: Rarity::create(record.rarity)?,
+            rarity: Rarity::new(record.rarity),
             created_at: record.created_at,
             updated_at: record.updated_at,
-        };
-        Ok(servant)
+        }
     }
 }

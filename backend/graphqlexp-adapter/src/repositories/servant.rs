@@ -28,7 +28,7 @@ impl ServantRepository for Repository<Servant> {
             .fetch_optional(&*pool)
             .await?;
         match result {
-            Some(record) => Ok(Some(record.try_into()?)),
+            Some(record) => Ok(Some(record.into())),
             None => Ok(None),
         }
     }
@@ -45,7 +45,7 @@ impl ServantRepository for Repository<Servant> {
 
         let mut servants: Vec<Servant> = vec![];
         for record in results {
-            let servant = record.try_into()?;
+            let servant = record.into();
             servants.push(servant);
         }
         Ok(servants)
@@ -65,7 +65,7 @@ impl ServantRepository for Repository<Servant> {
             .bind(servant.rarity.value())
             .fetch_one(&*pool)
             .await?;
-        let servant = result.try_into()?;
+        let servant = result.into();
         Ok(servant)
     }
 }

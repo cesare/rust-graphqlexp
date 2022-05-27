@@ -30,7 +30,7 @@ impl RegisterServant {
         let new_servant = NewServant {
             name: registration.name,
             class: Class::from(registration.class_name.as_str()),
-            rarity: Rarity::create(registration.rarity)?,
+            rarity: Rarity::new(registration.rarity),
         };
         let result = repository.register(new_servant).await?;
         Ok(result)
