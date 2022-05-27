@@ -1,18 +1,19 @@
 use async_trait::async_trait;
 use sqlx::query_as;
 
-use graphqlexp_kernel::{
-    models::{
-        profile::{Profile, ProfileId},
-        servant::ServantId
-    },
+use graphqlexp_kernel::models::{
+    profile::{Profile, ProfileId},
+    servant::ServantId
 };
 pub use graphqlexp_kernel::{
     repositories::profile::{NewProfile, ProfileRepository},
 };
-use super::Repository;
-use crate::records::profile::ProfileRecord;
-use crate::Error;
+
+use crate::{
+    repositories::Repository,
+    records::profile::ProfileRecord,
+    Error,
+};
 
 #[async_trait]
 impl ProfileRepository for Repository<Profile> {

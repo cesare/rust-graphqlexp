@@ -1,6 +1,4 @@
-use juniper::{
-    GraphQLInputObject,
-};
+use juniper::GraphQLInputObject;
 
 use graphqlexp_app::{
     models::profile::Profile as ProfileModel,
