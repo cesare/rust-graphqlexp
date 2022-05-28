@@ -41,19 +41,19 @@ impl From<&str> for Class {
 impl ToString for Class {
     fn to_string(&self) -> String {
         let class_name = match self {
-            Self::Saber => "saber",
-            Self::Archer => "archer",
-            Self::Lancer => "lancer",
-            Self::Rider => "rider",
-            Self::Caster => "caster",
-            Self::Assassin => "assassin",
-            Self::Berserker => "berserker",
-            Self::Ruler => "ruler",
-            Self::Avenger => "avenger",
+            Self::Saber      => "saber",
+            Self::Archer     => "archer",
+            Self::Lancer     => "lancer",
+            Self::Rider      => "rider",
+            Self::Caster     => "caster",
+            Self::Assassin   => "assassin",
+            Self::Berserker  => "berserker",
+            Self::Ruler      => "ruler",
+            Self::Avenger    => "avenger",
             Self::Mooncancer => "mooncancer",
-            Self::Alterego => "alterego",
-            Self::Pretender => "pretender",
-            Self::Foreigner => "foreigner",
+            Self::Alterego   => "alterego",
+            Self::Pretender  => "pretender",
+            Self::Foreigner  => "foreigner",
         };
         class_name.to_owned()
     }
