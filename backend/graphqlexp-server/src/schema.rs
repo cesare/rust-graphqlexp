@@ -1,6 +1,5 @@
 use graphqlexp_app::{
     models::{
-        servant::Servant as ServantModel,
         profile::Profile as ProfileModel,
     },
     modules::{RepositoriesModule, UsecasesModule},
@@ -32,10 +31,6 @@ impl Context {
             repositories: repositories.clone(),
             loaders: Loaders::new(repositories),
         }
-    }
-
-    pub fn servant_repository(&self) -> Repository<ServantModel> {
-        self.repositories.servant_repository()
     }
 
     pub fn profile_repository(&self) -> Repository<ProfileModel> {
