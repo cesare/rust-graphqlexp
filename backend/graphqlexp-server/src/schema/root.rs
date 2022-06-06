@@ -19,8 +19,8 @@ pub struct QueryRoot;
 #[juniper::graphql_object(Context = Context)]
 impl QueryRoot {
     async fn servant(context: &Context, id: String) -> FieldResult<Servant> {
-        let repository = context.servant_repository();
-        let result = repository.find(id.into()).await?;
+        let usecase = context.usecases().fetching_servant_usecase();
+        let result = usecase.execute(id.into()).await?;
 
         match result {
             Some(servant) => {

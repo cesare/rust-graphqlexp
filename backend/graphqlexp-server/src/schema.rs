@@ -42,6 +42,10 @@ impl Context {
         self.repositories.profile_repository()
     }
 
+    pub fn usecases(&self) -> UsecasesModule {
+        UsecasesModule::new(self.repositories.clone())
+    }
+
     pub fn register_servant_usecase(&self) -> RegisterServant {
         let usecases = UsecasesModule::new(self.repositories.clone());
         usecases.register_servant_usecase()
