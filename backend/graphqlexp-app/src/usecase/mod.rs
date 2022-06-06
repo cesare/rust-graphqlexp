@@ -1,6 +1,5 @@
 mod profile;
 mod servant;
-mod register_servant;
 
 pub use profile::{
     registration::{ProfileAttributes, ProfileRegistration},
@@ -8,5 +7,5 @@ pub use profile::{
 pub use servant::{
     fetching::FetchingServant,
     listing::ListingServants,
+    registering::{RegisterServant, ServantRegistration},
 };
-pub use register_servant::{RegisterServant, ServantRegistration};
