@@ -6,8 +6,6 @@ use juniper::{
     graphql_value
 };
 
-use graphqlexp_app::repositories::servant::ServantRepository;
-
 use super::{
     Context,
     profile::{Profile, ProfileInput},
@@ -36,8 +34,8 @@ impl QueryRoot {
     }
 
     async fn list_servants(context: &Context) -> FieldResult<Vec<Servant>> {
-        let repository = context.servant_repository();
-        let servants = repository.list().await?;
+        let usecase = context.usecases().listing_servant_usecase();
+        let servants = usecase.execute().await?;
 
         let results = servants.into_iter()
             .map(|servant| servant.into())
