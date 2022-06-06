@@ -55,7 +55,7 @@ impl MutationRoot {
     }
 
     async fn register_profile(context: &Context, input: ProfileInput) -> FieldResult<Profile> {
-        let usecase = context.profile_registration_usecase();
+        let usecase = context.usecases().profile_registration_usecase();
         let profile = usecase.execute(input.into()).await?;
         Ok(profile.into())
     }

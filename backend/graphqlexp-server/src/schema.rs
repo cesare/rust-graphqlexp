@@ -6,9 +6,6 @@ use graphqlexp_app::{
     repositories::{
         Repository,
     },
-    usecase::{
-        ProfileRegistration,
-    }
 };
 
 use crate::loaders::Loaders;
@@ -38,11 +35,6 @@ impl Context {
 
     pub fn usecases(&self) -> UsecasesModule {
         UsecasesModule::new(self.repositories.clone())
-    }
-
-    pub fn profile_registration_usecase(&self) -> ProfileRegistration {
-        let usecases = UsecasesModule::new(self.repositories.clone());
-        usecases.profile_registration_usecase()
     }
 }
 
