@@ -49,7 +49,7 @@ pub struct MutationRoot;
 #[juniper::graphql_object(Context = Context)]
 impl MutationRoot {
     async fn create_servant(context: &Context, input: ServantInput) -> FieldResult<Servant> {
-        let usecase = context.register_servant_usecase();
+        let usecase = context.usecases().register_servant_usecase();
         let servant = usecase.execute(input.into()).await?;
         Ok(servant.into())
     }

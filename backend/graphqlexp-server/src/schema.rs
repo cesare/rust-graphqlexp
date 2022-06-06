@@ -8,7 +8,6 @@ use graphqlexp_app::{
     },
     usecase::{
         ProfileRegistration,
-        RegisterServant,
     }
 };
 
@@ -39,11 +38,6 @@ impl Context {
 
     pub fn usecases(&self) -> UsecasesModule {
         UsecasesModule::new(self.repositories.clone())
-    }
-
-    pub fn register_servant_usecase(&self) -> RegisterServant {
-        let usecases = UsecasesModule::new(self.repositories.clone());
-        usecases.register_servant_usecase()
     }
 
     pub fn profile_registration_usecase(&self) -> ProfileRegistration {
