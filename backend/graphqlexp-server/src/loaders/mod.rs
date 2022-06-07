@@ -1,7 +1,7 @@
 pub mod map;
 pub mod profile;
 
-use graphqlexp_app::modules::RepositoriesModule;
+use graphqlexp_app::modules::UsecasesModule;
 
 use profile::ServantProfilesLoader;
 
@@ -10,9 +10,9 @@ pub struct Loaders {
 }
 
 impl Loaders {
-    pub fn new(repositories: &RepositoriesModule) -> Self {
+    pub fn new(usecases: &UsecasesModule) -> Self {
         Self {
-            servant_profiles_loader: profile::servant_profiles_loader(repositories),
+            servant_profiles_loader: profile::servant_profiles_loader(usecases),
         }
     }
 }

@@ -11,12 +11,7 @@ use graphqlexp_app::{
         profile::Profile,
         servant::{Servant, ServantId},
     },
-    modules::RepositoriesModule,
-    repositories::{
-        profile::ProfileRepository,
-        Repository,
-    },
-    AdapterError,
+    modules::UsecasesModule,
 };
 
 use crate::loaders::map::OneToManyMap;
@@ -24,12 +19,13 @@ use crate::loaders::map::OneToManyMap;
 type ProfileMap = HashMap<ServantId, Vec<Profile>>;
 
 pub struct ServantProfilesLoadFn {
-    profile_repository: Repository<Profile>,
+    usecases: UsecasesModule,
 }
 
 impl ServantProfilesLoadFn {
-    pub async fn load_profiles(&self, ids: &[ServantId]) -> Result<Vec<Profile>, AdapterError> {
-        self.profile_repository.list_for_servants(ids).await
+    pub async fn load_profiles(&self, ids: &[ServantId]) -> Result<Vec<Profile>, Box<dyn std::error::Error>> {
+        let usecase = self.usecases.listing_profiles_for_servants_usecase();
+        usecase.list(ids).await
     }
 }
 
@@ -45,9 +41,9 @@ impl BatchFn<ServantId, Vec<Profile>> for ServantProfilesLoadFn {
 
 pub type ServantProfilesLoader = Loader<ServantId, Vec<Profile>, ServantProfilesLoadFn>;
 
-pub(super) fn servant_profiles_loader(repositories: &RepositoriesModule) -> ServantProfilesLoader {
+pub(super) fn servant_profiles_loader(usecases: &UsecasesModule) -> ServantProfilesLoader {
     let load_fn = ServantProfilesLoadFn {
-        profile_repository: repositories.profile_repository(),
+        usecases: usecases.clone(),
     };
     Loader::new(load_fn)
 }

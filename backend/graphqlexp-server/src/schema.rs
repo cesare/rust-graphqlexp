@@ -17,10 +17,9 @@ pub struct Context {
 
 impl Context {
     pub fn new(usecases: &UsecasesModule) -> Self {
-        let repositories = usecases.repositories.clone();
         Self {
             usecases: usecases.clone(),
-            loaders: Loaders::new(&repositories),
+            loaders: Loaders::new(&usecases),
         }
     }
 
