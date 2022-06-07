@@ -1,11 +1,5 @@
 use graphqlexp_app::{
-    models::{
-        profile::Profile as ProfileModel,
-    },
-    modules::{RepositoriesModule, UsecasesModule},
-    repositories::{
-        Repository,
-    },
+    modules::UsecasesModule,
 };
 
 use crate::loaders::Loaders;
@@ -17,24 +11,21 @@ mod servant;
 pub use root::Schema;
 
 pub struct Context {
-    repositories: RepositoriesModule,
+    usecases: UsecasesModule,
     pub loaders: Loaders,
 }
 
 impl Context {
-    pub fn new(repositories: &RepositoriesModule) -> Self {
+    pub fn new(usecases: &UsecasesModule) -> Self {
+        let repositories = usecases.repositories.clone();
         Self {
-            repositories: repositories.clone(),
-            loaders: Loaders::new(repositories),
+            usecases: usecases.clone(),
+            loaders: Loaders::new(&repositories),
         }
     }
 
-    pub fn profile_repository(&self) -> Repository<ProfileModel> {
-        self.repositories.profile_repository()
-    }
-
     pub fn usecases(&self) -> UsecasesModule {
-        UsecasesModule::new(self.repositories.clone())
+        self.usecases.clone()
     }
 }
 

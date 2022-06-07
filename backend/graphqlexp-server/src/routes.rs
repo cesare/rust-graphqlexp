@@ -7,7 +7,7 @@ use actix_web::{
 };
 use juniper::http::GraphQLRequest;
 
-use graphqlexp_app::modules::RepositoriesModule;
+use graphqlexp_app::modules::UsecasesModule;
 use crate::schema::{Context, Schema};
 
 pub fn configure_routes(cfg: &mut ServiceConfig) {
@@ -16,8 +16,8 @@ pub fn configure_routes(cfg: &mut ServiceConfig) {
     );
 }
 
-async fn graphql(repositories: Data<RepositoriesModule>, schema: Data<Schema>, data: Json<GraphQLRequest>) -> Result<HttpResponse, Error> {
-    let context = Context::new(repositories.as_ref());
+async fn graphql(usecases: Data<UsecasesModule>, schema: Data<Schema>, data: Json<GraphQLRequest>) -> Result<HttpResponse, Error> {
+    let context = Context::new(usecases.as_ref());
 
     let res = data.execute(&schema, &context).await;
     let response_body = serde_json::to_string(&res)?;
