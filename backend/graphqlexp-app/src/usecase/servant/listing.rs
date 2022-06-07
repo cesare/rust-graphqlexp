@@ -1,10 +1,11 @@
 use std::sync::Arc;
 
 use graphqlexp_adapter::{
-    models::servant::Servant,
     modules::RepositoriesModule,
     repositories::servant::ServantRepository,
 };
+
+use crate::models::servant::Servant;
 
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 

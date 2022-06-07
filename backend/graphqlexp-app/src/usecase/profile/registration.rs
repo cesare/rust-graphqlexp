@@ -1,12 +1,13 @@
 use std::sync::Arc;
 
 use graphqlexp_adapter::{
-    models::{
-        profile::{Profile, ProfilePosition},
-        servant::{ServantId},
-    },
     modules::RepositoriesModule,
     repositories::profile::{NewProfile, ProfileRepository},
+};
+
+use crate::models::{
+    profile::{Profile, ProfilePosition},
+    servant::ServantId,
 };
 
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
