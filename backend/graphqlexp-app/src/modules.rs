@@ -2,7 +2,8 @@ use std::sync::Arc;
 
 pub use graphqlexp_adapter::modules::RepositoriesModuleConfig;
 pub use graphqlexp_adapter::modules::RepositoriesModule;
-use crate::usecase::{FetchingServant, ListingServants, ProfileRegistration, RegisterServant};
+
+use crate::usecase::{FetchingServant, ListingServants, ProfilesForServants, ProfileRegistration, RegisterServant};
 
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
@@ -37,5 +38,9 @@ impl UsecasesModule {
 
     pub fn profile_registration_usecase(&self) -> ProfileRegistration {
         ProfileRegistration::new(&self.repositories)
+    }
+
+    pub fn listing_profiles_for_servants_usecase(&self) -> ProfilesForServants {
+        ProfilesForServants::new(&self.repositories)
     }
 }

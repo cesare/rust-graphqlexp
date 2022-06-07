@@ -3,6 +3,7 @@ mod servant;
 
 pub use profile::{
     registration::{ProfileAttributes, ProfileRegistration},
+    listing::ProfilesForServants,
 };
 pub use servant::{
     fetching::FetchingServant,
