@@ -31,10 +31,9 @@ impl ProfileRepository for Repository<Profile> {
             .bind(&id.value)
             .fetch_optional(&*pool)
             .await?;
-        match result {
-            Some(record) => Ok(Some(record.into())),
-            _ => Ok(None),
-        }
+
+        let profile = result.map(|record| record.into());
+        Ok(profile)
     }
 
     async fn list_for_servant(&self, servant_id: &ServantId) -> Result<Vec<Profile>, Error> {
@@ -50,11 +49,9 @@ impl ProfileRepository for Repository<Profile> {
             .fetch_all(&*pool)
             .await?;
 
-        let mut profiles: Vec<Profile> = vec![];
-        for record in results {
-            let profile = record.into();
-            profiles.push(profile);
-        }
+        let profiles = results.into_iter()
+            .map(|record| record.into())
+            .collect();
         Ok(profiles)
     }
 
@@ -71,11 +68,7 @@ impl ProfileRepository for Repository<Profile> {
             .fetch_all(&*pool)
             .await?;
 
-        let mut profiles: Vec<Profile> = vec![];
-        for record in results {
-            let profile = record.into();
-            profiles.push(profile);
-        }
+        let profiles = results.into_iter().map(|record| record.into()).collect();
         Ok(profiles)
     }
 

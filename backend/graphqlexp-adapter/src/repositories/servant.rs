@@ -27,10 +27,9 @@ impl ServantRepository for Repository<Servant> {
             .bind(id.value)
             .fetch_optional(&*pool)
             .await?;
-        match result {
-            Some(record) => Ok(Some(record.into())),
-            None => Ok(None),
-        }
+
+        let servant = result.map(|record| record.into());
+        Ok(servant)
     }
 
     async fn list(&self) -> Result<Vec<Servant>, Error> {
@@ -43,11 +42,9 @@ impl ServantRepository for Repository<Servant> {
             .fetch_all(&*pool)
             .await?;
 
-        let mut servants: Vec<Servant> = vec![];
-        for record in results {
-            let servant = record.into();
-            servants.push(servant);
-        }
+        let servants = results.into_iter()
+            .map(|record| record.into())
+            .collect();
         Ok(servants)
     }
 
