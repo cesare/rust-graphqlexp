@@ -9,7 +9,7 @@ type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 #[derive(Clone)]
 pub struct UsecasesModule {
-    pub repositories: Arc<RepositoriesModule>,
+    repositories: Arc<RepositoriesModule>,
 }
 
 impl UsecasesModule {
