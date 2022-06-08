@@ -3,9 +3,8 @@ use std::path::PathBuf;
 use actix_web::{App, HttpServer, web};
 use structopt::StructOpt;
 
-use graphqlexp_app::{
-    modules::{RepositoriesModule, UsecasesModule},
-};
+use graphqlexp_app::modules::UsecasesModule;
+
 use graphqlexp_server::{
     config::{GraphqlexpConfig},
     logger::{initialize_logger, default_logger},
@@ -26,7 +25,6 @@ struct Args {
 async fn main() -> Result<()> {
     let args = Args::from_args();
     let config = GraphqlexpConfig::load(&args.config_file).await?;
-    let repositories = RepositoriesModule::create(&config.database).await?;
     let usecases = UsecasesModule::create(&config.database).await?;
 
     initialize_logger()?;
@@ -35,7 +33,6 @@ async fn main() -> Result<()> {
         App::new()
             .wrap(default_logger())
             .app_data(web::Data::new(create_schema()))
-            .app_data(web::Data::new(repositories.clone()))
             .app_data(web::Data::new(usecases.clone()))
             .configure(configure_routes)
     });
