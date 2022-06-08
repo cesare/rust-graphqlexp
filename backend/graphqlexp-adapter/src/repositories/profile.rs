@@ -37,22 +37,8 @@ impl ProfileRepository for Repository<Profile> {
     }
 
     async fn list_for_servant(&self, servant_id: &ServantId) -> Result<Vec<Profile>, Error> {
-        let pool = self.database.pool.clone();
-        let statement = "
-            select id, servant_id, position, text
-            from profiles
-            where servant_id = $1
-            order by position
-        ";
-        let results = query_as::<_, ProfileRecord>(statement)
-            .bind(&servant_id.value)
-            .fetch_all(&*pool)
-            .await?;
-
-        let profiles = results.into_iter()
-            .map(|record| record.into())
-            .collect();
-        Ok(profiles)
+        let ids = vec![servant_id.clone()];
+        self.list_for_servants(&ids).await
     }
 
     async fn list_for_servants(&self, ids: &[ServantId]) -> Result<Vec<Profile>, Error> {
