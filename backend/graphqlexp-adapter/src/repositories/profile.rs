@@ -61,6 +61,7 @@ impl ProfileRepository for Repository<Profile> {
             select id, servant_id, position, text
             from profiles
             where servant_id = any($1)
+            order by servant_id, position
         ";
         let raw_ids: Vec<String> = ids.iter().map(|id| id.value.to_owned()).collect();
         let results = query_as::<_, ProfileRecord>(statement)
