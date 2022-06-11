@@ -1,4 +1,7 @@
+use std::str::FromStr;
 use std::string::ToString;
+
+use crate::models::GraphqlexpError;
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum Class {
@@ -17,24 +20,33 @@ pub enum Class {
     Foreigner,
 }
 
+impl FromStr for Class {
+    type Err = GraphqlexpError;
+
+    fn from_str(class_name: &str) -> Result<Self, Self::Err> {
+        match class_name {
+            "saber"      => Ok(Self::Saber),
+            "archer"     => Ok(Self::Archer),
+            "lancer"     => Ok(Self::Lancer),
+            "rider"      => Ok(Self::Rider),
+            "caster"     => Ok(Self::Caster),
+            "assassin"   => Ok(Self::Assassin),
+            "berserker"  => Ok(Self::Berserker),
+            "ruler"      => Ok(Self::Ruler),
+            "avenger"    => Ok(Self::Avenger),
+            "mooncancer" => Ok(Self::Mooncancer),
+            "alterego"   => Ok(Self::Alterego),
+            "pretender"  => Ok(Self::Pretender),
+            "foreigner"  => Ok(Self::Foreigner),
+            _ => Err(GraphqlexpError::UnknownClass(class_name.to_owned())),
+        }
+    }
+}
+
 impl From<&str> for Class {
     fn from(class_name: &str) -> Self {
-        match class_name {
-            "saber"      => Self::Saber,
-            "archer"     => Self::Archer,
-            "lancer"     => Self::Lancer,
-            "rider"      => Self::Rider,
-            "caster"     => Self::Caster,
-            "assassin"   => Self::Assassin,
-            "berserker"  => Self::Berserker,
-            "ruler"      => Self::Ruler,
-            "avenger"    => Self::Avenger,
-            "mooncancer" => Self::Mooncancer,
-            "alterego"   => Self::Alterego,
-            "pretender"  => Self::Pretender,
-            "foreigner"  => Self::Foreigner,
-            _ => panic!("Unknown class name: {}", class_name)
-        }
+        Self::from_str(class_name)
+            .unwrap_or_else(|e| panic!("{}", e))
     }
 }
 
