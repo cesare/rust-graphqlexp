@@ -8,4 +8,7 @@ pub mod servant;
 pub enum GraphqlexpError {
     #[error("Unknown servant class: {0}")]
     UnknownClass(String),
+
+    #[error("Invalid rarity value: {0}")]
+    InvalidRarity(i32),
 }

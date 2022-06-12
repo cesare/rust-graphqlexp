@@ -1,5 +1,7 @@
 use std::ops::RangeInclusive;
 
+use crate::models::GraphqlexpError;
+
 #[derive(Clone, Debug, PartialEq, PartialOrd)]
 pub struct Rarity {
     value: i32,
@@ -9,14 +11,22 @@ impl Rarity {
     const RARITY_RANGE: RangeInclusive<i32> = 0..=5;
 
     pub fn new(value: i32) -> Self {
-        if ! Self::RARITY_RANGE.contains(&value) {
-            panic!("Invalid rarity value: {}", value);
-        }
-        Self { value }
+        value.try_into().unwrap_or_else(|e| panic!("{}", e))
     }
 
     pub fn value(&self) -> i32 {
         self.value
+    }
+}
+
+impl TryFrom<i32> for Rarity {
+    type Error = GraphqlexpError;
+
+    fn try_from(value: i32) -> Result<Self, Self::Error> {
+        if ! Self::RARITY_RANGE.contains(&value) {
+            return Err(GraphqlexpError::InvalidRarity(value))
+        }
+        Ok(Self { value })
     }
 }
 
