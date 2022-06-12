@@ -11,4 +11,7 @@ pub enum GraphqlexpError {
 
     #[error("Invalid rarity value: {0}")]
     InvalidRarity(i32),
+
+    #[error("Invalid profile position value: {0}")]
+    InvalidProfilePosition(i32),
 }

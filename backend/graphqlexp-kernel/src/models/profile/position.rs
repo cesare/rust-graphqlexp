@@ -1,3 +1,5 @@
+use crate::models::GraphqlexpError;
+
 #[derive(Clone, Debug, PartialEq, PartialOrd)]
 pub struct ProfilePosition {
     value: i32,
@@ -5,14 +7,22 @@ pub struct ProfilePosition {
 
 impl ProfilePosition {
     pub fn new(value: i32) -> Self {
-        if value < 1 {
-            panic!("Invalid profile position value: {}", value);
-        }
-        Self { value }
+        value.try_into().unwrap_or_else(|e| panic!("{}", e))
     }
 
     pub fn value(&self) -> i32 {
         self.value
+    }
+}
+
+impl TryFrom<i32> for ProfilePosition {
+    type Error = GraphqlexpError;
+
+    fn try_from(value: i32) -> Result<Self, Self::Error> {
+        if value < 1 {
+            return Err(GraphqlexpError::InvalidProfilePosition(value))
+        }
+        Ok(Self { value })
     }
 }
 
