@@ -1,7 +1,7 @@
 use chrono::{DateTime, Local};
 use sqlx::FromRow;
 
-use graphqlexp_kernel::models::servant::{Class, Rarity, Servant, ServantId};
+use graphqlexp_kernel::models::servant::{Class, Name, Rarity, Servant, ServantId};
 
 #[derive(FromRow)]
 pub struct ServantRecord {
@@ -17,7 +17,7 @@ impl From<ServantRecord> for Servant {
     fn from(record: ServantRecord) -> Self {
         Self {
             id: ServantId::new(record.id),
-            name: record.name,
+            name: Name::new(&record.name),
             class: Class::from(record.class_name.as_str()),
             rarity: Rarity::new(record.rarity),
             created_at: record.created_at,

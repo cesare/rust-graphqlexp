@@ -15,7 +15,7 @@ pub type ServantId = Id<Servant>;
 #[derive(Clone, Debug)]
 pub struct Servant {
     pub id: ServantId,
-    pub name: String,
+    pub name: Name,
     pub class: Class,
     pub rarity: Rarity,
     pub created_at: DateTime<Local>,

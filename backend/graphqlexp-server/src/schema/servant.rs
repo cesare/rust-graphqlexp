@@ -22,8 +22,8 @@ impl Servant {
         &self.model.id.value
     }
 
-    fn name(&self) -> &str {
-        &self.model.name
+    fn name(&self) -> String {
+        self.model.name.value()
     }
 
     fn class_name(&self) -> String {
