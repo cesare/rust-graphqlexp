@@ -7,6 +7,9 @@ pub use rarity::Rarity;
 mod class;
 pub use class::Class;
 
+mod name;
+pub use name::Name;
+
 pub type ServantId = Id<Servant>;
 
 #[derive(Clone, Debug)]
