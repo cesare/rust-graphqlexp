@@ -10,6 +10,6 @@ pub mod profile {
 
 pub mod servant {
     pub use graphqlexp_kernel::models::servant::{
-        Class, Rarity, Servant, ServantId,
+        Class, Name, Rarity, Servant, ServantId,
     };
 }

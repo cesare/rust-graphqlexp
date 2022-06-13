@@ -1,11 +1,11 @@
 use async_trait::async_trait;
 
 use crate::models::{
-    servant::{Class, Rarity, Servant, ServantId}
+    servant::{Class, Name, Rarity, Servant, ServantId}
 };
 
 pub struct NewServant {
-    pub name: String,
+    pub name: Name,
     pub class: Class,
     pub rarity: Rarity,
 }

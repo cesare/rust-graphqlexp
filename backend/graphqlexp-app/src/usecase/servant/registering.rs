@@ -1,3 +1,4 @@
+use std::str::FromStr;
 use std::sync::Arc;
 
 use graphqlexp_adapter::{
@@ -5,7 +6,7 @@ use graphqlexp_adapter::{
     repositories::servant::{NewServant, ServantRepository},
 };
 
-use crate::models::servant::{Class, Rarity, Servant};
+use crate::models::servant::{Class, Name, Rarity, Servant};
 
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
@@ -29,7 +30,7 @@ impl RegisterServant {
     pub async fn execute(&self, registration: ServantRegistration) -> Result<Servant> {
         let repository = self.repositories.servant_repository();
         let new_servant = NewServant {
-            name: registration.name,
+            name: Name::from_str(&registration.name)?,
             class: Class::from(registration.class_name.as_str()),
             rarity: Rarity::new(registration.rarity),
         };

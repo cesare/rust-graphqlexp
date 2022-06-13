@@ -57,7 +57,7 @@ impl ServantRepository for Repository<Servant> {
         ";
         let result = query_as::<_, ServantRecord>(statement)
             .bind(cuid::cuid()?)
-            .bind(servant.name)
+            .bind(servant.name.value())
             .bind(servant.class.to_string())
             .bind(servant.rarity.value())
             .fetch_one(&*pool)
