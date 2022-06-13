@@ -19,7 +19,7 @@ impl Context {
     pub fn new(usecases: &UsecasesModule) -> Self {
         Self {
             usecases: usecases.clone(),
-            loaders: Loaders::new(&usecases),
+            loaders: Loaders::new(usecases),
         }
     }
 
