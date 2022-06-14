@@ -1,14 +1,14 @@
 use async_trait::async_trait;
 
 use crate::models::{
-    profile::{Profile, ProfileId, ProfilePosition},
+    profile::{Profile, ProfileId, ProfilePosition, ProfileText},
     servant::ServantId,
 };
 
 pub struct NewProfile {
     pub servant_id: ServantId,
     pub position: ProfilePosition,
-    pub text: String,
+    pub text: ProfileText,
 }
 
 #[async_trait]

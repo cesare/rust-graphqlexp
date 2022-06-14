@@ -20,7 +20,7 @@ impl Profile {
     }
 
     fn text(&self) -> &str {
-        &self.model.text
+        self.model.text.as_ref()
     }
 }
 

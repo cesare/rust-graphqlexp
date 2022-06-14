@@ -70,7 +70,7 @@ impl ProfileRepository for Repository<Profile> {
             .bind(cuid::cuid()?)
             .bind(profile.servant_id.value)
             .bind(profile.position.value())
-            .bind(profile.text)
+            .bind(profile.text.as_ref())
             .fetch_one(&*pool)
             .await?;
 

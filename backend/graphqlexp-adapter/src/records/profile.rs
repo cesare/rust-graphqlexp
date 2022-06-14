@@ -1,7 +1,7 @@
 use sqlx::FromRow;
 
 use graphqlexp_kernel::models::{
-    profile::{Profile, ProfileId, ProfilePosition},
+    profile::{Profile, ProfileId, ProfilePosition, ProfileText},
     servant::ServantId
 };
 
@@ -19,7 +19,7 @@ impl From<ProfileRecord> for Profile {
             id: ProfileId::new(record.id),
             servant_id: ServantId::new(record.servant_id),
             position: ProfilePosition::new(record.position),
-            text: record.text,
+            text: ProfileText::new(&record.text),
         }
     }
 }

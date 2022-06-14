@@ -4,7 +4,7 @@ pub use graphqlexp_kernel::models::id::{
 
 pub mod profile {
     pub use graphqlexp_kernel::models::profile::{
-        Profile, ProfileId, ProfilePosition,
+        Profile, ProfileId, ProfilePosition, ProfileText,
     };
 }
 

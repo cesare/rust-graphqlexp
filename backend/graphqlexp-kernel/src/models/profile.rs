@@ -15,7 +15,7 @@ pub struct Profile {
     pub id: ProfileId,
     pub servant_id: ServantId,
     pub position: ProfilePosition,
-    pub text: String,
+    pub text: ProfileText,
 }
 
 impl Identifiable<Profile> for Profile {

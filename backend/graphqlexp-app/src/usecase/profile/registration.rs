@@ -1,8 +1,8 @@
-use std::sync::Arc;
+use std::{sync::Arc, str::FromStr};
 
 use graphqlexp_adapter::{
     modules::RepositoriesModule,
-    repositories::profile::{NewProfile, ProfileRepository},
+    repositories::profile::{NewProfile, ProfileRepository}, models::profile::ProfileText,
 };
 
 use crate::models::{
@@ -34,7 +34,7 @@ impl ProfileRegistration {
         let new_profile = NewProfile {
             servant_id: ServantId::new(attrs.servant_id),
             position: ProfilePosition::new(attrs.position),
-            text: attrs.text,
+            text: ProfileText::from_str(&attrs.text)?,
         };
         let profile = repository.register(new_profile).await?;
         Ok(profile)
