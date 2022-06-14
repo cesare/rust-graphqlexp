@@ -5,6 +5,8 @@ use super::{
 
 mod position;
 pub use position::ProfilePosition;
+mod text;
+pub use text::ProfileText;
 
 pub type ProfileId = Id<Profile>;
 

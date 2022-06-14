@@ -17,4 +17,7 @@ pub enum GraphqlexpError {
 
     #[error("Invalid profile position value: {0}")]
     InvalidProfilePosition(i32),
+
+    #[error("Invalid profile text: '{0}'")]
+    InvalidProfileText(String),
 }
