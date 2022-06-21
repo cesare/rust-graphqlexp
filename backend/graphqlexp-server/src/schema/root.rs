@@ -27,7 +27,7 @@ impl QueryRoot {
             _ => {
                 Err(FieldError::new(
                     "Servant Not Found",
-                    graphql_value!({ "not_found": "servant not found" }),
+                    graphql_value!({ "code": "NOT_FOUND" }),
                 ))
             }
         }
